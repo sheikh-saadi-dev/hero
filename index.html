@@ -3,36 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Northbound Expeditions</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --ink: #14201e;
-  --cream: #f1ead9;
-  --muted: rgba(241, 234, 217, .68);
-  --gold: #c9973e;
-  --dark: rgba(20, 32, 30, .92);
+:root{
+  --ink:#14201E;
+  --cream:#F1EAD9;
+  --muted:rgba(241,234,217,.68);
+  --gold:#C9973E;
 }
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
 html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--ink);
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:var(--ink);
 }
 
-body {
-  font-family: "Work Sans", sans-serif;
-  overflow: hidden;
+body{
+  font-family:'Work Sans',sans-serif;
+  overflow:hidden;
 }
 
 
@@ -40,15 +42,17 @@ body {
    HERO
 ========================= */
 
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 560px;
-  overflow: hidden;
-  color: var(--cream);
-  background: var(--ink);
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  height:100dvh;
+  min-height:560px;
+
+  overflow:hidden;
+
+  background:var(--ink);
+  color:var(--cream);
 }
 
 
@@ -56,46 +60,48 @@ body {
    BACKGROUND
 ========================= */
 
-.hero-bg {
-  position: absolute;
-  inset: -4%;
-  z-index: 1;
+.hero-bg{
+  position:absolute;
+  inset:-5%;
 
-  background-size: cover;
-  background-position: center bottom;
-  background-repeat: no-repeat;
+  z-index:1;
 
-  opacity: 0;
+  background-size:cover;
+  background-position:center bottom;
+  background-repeat:no-repeat;
 
-  transform: scale(1.08) translateY(-2%);
+  opacity:0;
+
+  transform:scale(1.1) translateY(-3%);
 
   transition:
-    opacity 1s ease,
-    transform 5s cubic-bezier(.22, .61, .36, 1);
+    opacity 1.15s ease,
+    transform 5s cubic-bezier(.22,.61,.36,1);
 }
 
-.hero-bg.active {
-  opacity: 1;
-  transform: scale(1) translateY(2%);
+.hero-bg.active{
+  opacity:1;
+  transform:scale(1) translateY(2%);
 }
 
 
 /* =========================
-   DARK GRADIENT
+   OVERLAY
 ========================= */
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+.hero-overlay{
+  position:absolute;
+  inset:0;
+
+  z-index:2;
 
   background:
     linear-gradient(
       100deg,
-      rgba(20, 32, 30, .95) 0%,
-      rgba(20, 32, 30, .76) 30%,
-      rgba(20, 32, 30, .34) 58%,
-      rgba(20, 32, 30, .08) 82%
+      rgba(20,32,30,.95) 0%,
+      rgba(20,32,30,.76) 30%,
+      rgba(20,32,30,.32) 60%,
+      rgba(20,32,30,.04) 85%
     );
 }
 
@@ -104,210 +110,225 @@ body {
    CONTENT
 ========================= */
 
-.hero-content {
-  position: absolute;
-  left: 6%;
-  top: 50%;
-  transform: translateY(-50%);
+.hero-content{
+  position:absolute;
 
-  width: min(520px, 43vw);
+  left:6%;
+  top:50%;
 
-  z-index: 5;
+  transform:translateY(-50%);
+
+  width:min(520px,43vw);
+
+  z-index:5;
 }
 
-.hero-kicker {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
 
-  margin-bottom: 22px;
+  margin-bottom:22px;
 
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
 
-  color: var(--gold);
+  color:var(--gold);
 }
 
-.hero-kicker::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--gold);
+.kicker::before{
+  content:"";
+
+  width:34px;
+  height:1px;
+
+  background:var(--gold);
 }
 
-.hero-heading {
-  margin: 0 0 18px;
+.hero-heading{
+  margin:0 0 18px;
 
-  font-family: "Fraunces", serif;
-  font-style: italic;
-  font-weight: 500;
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:500;
 
-  font-size: clamp(2rem, 4.5vw, 4.4rem);
-  line-height: 1.04;
-  letter-spacing: -.025em;
+  font-size:clamp(2rem,4.5vw,4.4rem);
+
+  line-height:1.04;
+
+  letter-spacing:-.025em;
 
   transition:
     opacity .45s ease,
     transform .55s ease;
 }
 
-.hero-sub {
-  max-width: 500px;
+.hero-sub{
+  max-width:500px;
 
-  margin: 0 0 30px;
+  margin:0 0 26px;
 
-  font-size: clamp(.82rem, 1.3vw, 1rem);
-  line-height: 1.75;
+  font-size:clamp(.82rem,1.3vw,1rem);
 
-  color: var(--muted);
+  line-height:1.75;
+
+  color:var(--muted);
 
   transition:
     opacity .45s ease,
     transform .55s ease;
 }
 
+.location{
+  display:flex;
+  align-items:center;
+  gap:8px;
 
-/* =========================
-   LOCATION
-========================= */
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
 
-.hero-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-
-  color: rgba(241, 234, 217, .52);
+  color:rgba(241,234,217,.5);
 }
 
-.hero-location span {
-  width: 5px;
-  height: 5px;
+.location-dot{
+  width:5px;
+  height:5px;
 
-  border-radius: 50%;
+  border-radius:50%;
 
-  background: var(--gold);
+  background:var(--gold);
 }
 
 
 /* =========================
-   GALLERY
+   CONTENT ANIMATION
 ========================= */
 
-.gallery {
-  position: absolute;
-
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-
-  z-index: 6;
-
-  width: min(470px, 39vw);
-  height: min(72vh, 590px);
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  padding: 70px 18px 70px 10px;
-
-  scroll-behavior: smooth;
-
-  scrollbar-width: none;
-
-  cursor: grab;
-}
-
-.gallery::-webkit-scrollbar {
-  display: none;
-}
-
-.gallery.dragging {
-  cursor: grabbing;
+.content-changing .hero-heading,
+.content-changing .hero-sub,
+.content-changing .location{
+  opacity:0;
+  transform:translateY(14px);
 }
 
 
 /* =========================
-   GALLERY ITEM
+   HORIZONTAL SLIDER
 ========================= */
 
-.gallery-item {
-  position: relative;
+.gallery{
+  position:absolute;
 
-  width: min(250px, 19vw);
-  height: 310px;
+  left:50%;
+  bottom:8%;
 
-  margin-left: auto;
-  margin-bottom: 20px;
+  transform:translateX(-50%);
 
-  border-radius: 28px;
+  z-index:6;
 
-  overflow: hidden;
+  width:88%;
+  height:230px;
 
-  background: #222;
+  display:flex;
+  align-items:flex-end;
 
-  border: 1px solid rgba(241, 234, 217, .12);
+  gap:18px;
 
-  opacity: .52;
+  overflow-x:auto;
+  overflow-y:hidden;
 
-  transform:
-    scale(.88)
-    translateX(12px);
+  padding:20px 0;
+
+  scrollbar-width:none;
+
+  cursor:grab;
+
+  /* IMPORTANT:
+     No background color
+  */
+
+  background:transparent;
+}
+
+.gallery::-webkit-scrollbar{
+  display:none;
+}
+
+.gallery.dragging{
+  cursor:grabbing;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.gallery-item{
+  position:relative;
+
+  flex:0 0 150px;
+
+  width:150px;
+  height:190px;
+
+  overflow:hidden;
+
+  border-radius:24px;
+
+  background:transparent;
+
+  border:1px solid rgba(241,234,217,.18);
+
+  opacity:.52;
+
+  transform:scale(.88);
 
   transition:
-    transform .7s cubic-bezier(.22, .61, .36, 1),
+    transform .7s cubic-bezier(.22,.61,.36,1),
     opacity .5s ease,
     border-color .5s ease,
     box-shadow .5s ease;
 
-  cursor: pointer;
+  cursor:pointer;
 }
 
-.gallery-item:hover {
-  opacity: .82;
-
-  transform:
-    scale(.93)
-    translateX(0);
+.gallery-item:hover{
+  opacity:.82;
+  transform:scale(.93);
 }
 
-.gallery-item.active {
-  opacity: 1;
+.gallery-item.active{
+  opacity:1;
 
-  transform:
-    scale(1)
-    translateX(0);
+  transform:scale(1);
 
-  border-color:
-    rgba(201, 151, 62, .8);
+  border-color:rgba(201,151,62,.85);
 
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, .45);
+    0 25px 60px rgba(0,0,0,.42);
 }
 
 
 /* =========================
-   IMAGE
+   CARD IMAGE
 ========================= */
 
-.gallery-image {
-  width: 100%;
-  height: 100%;
+.gallery-item img{
+  display:block;
 
-  object-fit: cover;
+  width:100%;
+  height:100%;
 
-  display: block;
+  object-fit:cover;
 
   transition:
-    transform 1s cubic-bezier(.22, .61, .36, 1);
+    transform .9s cubic-bezier(.22,.61,.36,1);
 }
 
-.gallery-item:hover .gallery-image {
-  transform: scale(1.05);
+.gallery-item:hover img{
+  transform:scale(1.06);
 }
 
 
@@ -315,20 +336,20 @@ body {
    IMAGE GRADIENT
 ========================= */
 
-.gallery-item::after {
-  content: "";
+.gallery-item::after{
+  content:"";
 
-  position: absolute;
-  inset: 0;
+  position:absolute;
+  inset:0;
 
   background:
     linear-gradient(
       to top,
-      rgba(20, 32, 30, .65),
+      rgba(20,32,30,.7),
       transparent 55%
     );
 
-  pointer-events: none;
+  pointer-events:none;
 }
 
 
@@ -336,27 +357,22 @@ body {
    NUMBER
 ========================= */
 
-.gallery-number {
-  position: absolute;
+.number{
+  position:absolute;
 
-  left: 18px;
-  bottom: 17px;
+  left:16px;
+  bottom:14px;
 
-  z-index: 2;
+  z-index:2;
 
-  font-size: 10px;
-  letter-spacing: .18em;
+  font-size:9px;
+  letter-spacing:.2em;
 
-  color: rgba(241, 234, 217, .8);
+  color:rgba(241,234,217,.72);
 }
 
-
-/* =========================
-   SELECT INDICATOR
-========================= */
-
-.gallery-item.active .gallery-number {
-  color: var(--gold);
+.gallery-item.active .number{
+  color:var(--gold);
 }
 
 
@@ -364,73 +380,59 @@ body {
    PROGRESS
 ========================= */
 
-.hero-progress {
-  position: absolute;
+.progress{
+  position:absolute;
 
-  left: 6%;
-  bottom: 7%;
+  left:6%;
+  bottom:7%;
 
-  z-index: 7;
+  z-index:7;
 
-  width: 120px;
-  height: 2px;
+  width:120px;
+  height:2px;
 
-  overflow: hidden;
+  background:rgba(241,234,217,.18);
 
-  background:
-    rgba(241, 234, 217, .18);
+  overflow:hidden;
 }
 
-.hero-progress-bar {
-  width: 0;
-  height: 100%;
+.progress-bar{
+  width:0;
+  height:100%;
 
-  background: var(--gold);
-
-  transition: width .1s linear;
+  background:var(--gold);
 }
 
 
 /* =========================
-   NAVIGATION HINT
+   SCROLL HINT
 ========================= */
 
-.gallery-hint {
-  position: absolute;
+.scroll-hint{
+  position:absolute;
 
-  right: 5%;
-  bottom: 7%;
+  right:6%;
+  bottom:7%;
 
-  z-index: 7;
+  z-index:7;
 
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
+  font-size:9px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
 
-  color: rgba(241, 234, 217, .45);
+  color:rgba(241,234,217,.42);
 }
 
-.gallery-hint::before {
-  content: "↕";
+.scroll-hint::before{
+  content:"← →";
 
-  font-size: 18px;
-  color: var(--gold);
-}
+  color:var(--gold);
 
-
-/* =========================
-   TEXT ANIMATION
-========================= */
-
-.content-changing .hero-heading,
-.content-changing .hero-sub,
-.content-changing .hero-location {
-  opacity: 0;
-  transform: translateY(16px);
+  font-size:13px;
 }
 
 
@@ -438,21 +440,21 @@ body {
    TABLET
 ========================= */
 
-@media (max-width: 900px) {
+@media(max-width:900px){
 
-  .hero-content {
-    left: 5%;
-    width: 46vw;
+  .hero-content{
+    left:5%;
+    width:45vw;
   }
 
-  .gallery {
-    right: 3%;
-    width: 42vw;
+  .gallery{
+    width:90%;
   }
 
-  .gallery-item {
-    width: 22vw;
-    height: 270px;
+  .gallery-item{
+    flex-basis:135px;
+    width:135px;
+    height:175px;
   }
 }
 
@@ -461,75 +463,70 @@ body {
    MOBILE
 ========================= */
 
-@media (max-width: 700px) {
+@media(max-width:700px){
 
-  body {
-    overflow: hidden;
-  }
-
-  .hero {
-    min-height: 600px;
-  }
-
-  .hero-overlay {
+  .hero-overlay{
     background:
       linear-gradient(
         100deg,
-        rgba(20, 32, 30, .94) 0%,
-        rgba(20, 32, 30, .65) 52%,
-        rgba(20, 32, 30, .18) 100%
+        rgba(20,32,30,.95) 0%,
+        rgba(20,32,30,.68) 55%,
+        rgba(20,32,30,.15) 100%
       );
   }
 
-  .hero-content {
-    left: 6%;
-    top: 50%;
+  .hero-content{
+    left:6%;
 
-    width: 45vw;
+    top:42%;
 
-    transform: translateY(-50%);
+    width:46vw;
   }
 
-  .hero-heading {
-    font-size: clamp(1.65rem, 6vw, 2.5rem);
+  .hero-heading{
+    font-size:clamp(1.6rem,6vw,2.5rem);
   }
 
-  .hero-sub {
-    font-size: .76rem;
-    line-height: 1.55;
+  .hero-sub{
+    font-size:.72rem;
+    line-height:1.55;
   }
 
-  .hero-kicker {
-    font-size: 8px;
-    margin-bottom: 15px;
+  .kicker{
+    font-size:8px;
+    margin-bottom:15px;
   }
 
-  .gallery {
-    right: 3%;
-    width: 45vw;
+  .gallery{
+    left:5%;
+    bottom:7%;
 
-    height: 70vh;
+    transform:none;
 
-    padding-top: 80px;
-    padding-bottom: 80px;
+    width:90%;
+
+    height:185px;
+
+    gap:12px;
+
+    padding:10px 0;
   }
 
-  .gallery-item {
-    width: 38vw;
-    height: 210px;
+  .gallery-item{
+    flex-basis:105px;
 
-    border-radius: 21px;
+    width:105px;
+    height:150px;
 
-    margin-bottom: 14px;
+    border-radius:19px;
   }
 
-  .gallery-hint {
-    display: none;
+  .progress{
+    display:none;
   }
 
-  .hero-progress {
-    left: 6%;
-    bottom: 5%;
+  .scroll-hint{
+    display:none;
   }
 }
 
@@ -538,28 +535,25 @@ body {
    SMALL MOBILE
 ========================= */
 
-@media (max-width: 480px) {
+@media(max-width:480px){
 
-  .hero-content {
-    left: 6%;
-    width: 43vw;
+  .hero-content{
+    top:40%;
+    width:44vw;
   }
 
-  .hero-heading {
-    font-size: 1.55rem;
+  .hero-heading{
+    font-size:1.5rem;
   }
 
-  .hero-sub {
-    font-size: .7rem;
+  .hero-sub{
+    font-size:.68rem;
   }
 
-  .gallery {
-    width: 47vw;
-  }
-
-  .gallery-item {
-    width: 40vw;
-    height: 185px;
+  .gallery-item{
+    flex-basis:95px;
+    width:95px;
+    height:140px;
   }
 }
 
@@ -568,14 +562,13 @@ body {
    REDUCED MOTION
 ========================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion:reduce){
 
   *,
   *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition: none !important;
-    animation: none !important;
+  *::after{
+    transition:none!important;
+    animation:none!important;
   }
 }
 </style>
@@ -586,18 +579,17 @@ body {
 
 <section class="hero">
 
-  <!-- Background layers -->
   <div class="hero-bg active" id="bgA"></div>
   <div class="hero-bg" id="bgB"></div>
 
-  <!-- Dark overlay -->
   <div class="hero-overlay"></div>
 
 
-  <!-- Hero Content -->
+  <!-- HERO CONTENT -->
+
   <div class="hero-content" id="heroContent">
 
-    <div class="hero-kicker">
+    <div class="kicker">
       Northbound Expeditions
     </div>
 
@@ -609,27 +601,35 @@ body {
       Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.
     </p>
 
-    <div class="hero-location">
-      <span></span>
-      <strong id="heroLocation">Svalbard, Norway</strong>
+    <div class="location">
+      <span class="location-dot"></span>
+      <span id="heroLocation">
+        Svalbard, Norway
+      </span>
     </div>
 
   </div>
 
 
-  <!-- Vertical Gallery -->
+  <!-- HORIZONTAL IMAGE SLIDER -->
+
   <div class="gallery" id="gallery"></div>
 
 
-  <!-- Progress -->
-  <div class="hero-progress">
-    <div class="hero-progress-bar" id="progressBar"></div>
+  <!-- PROGRESS -->
+
+  <div class="progress">
+    <div
+      class="progress-bar"
+      id="progressBar">
+    </div>
   </div>
 
 
-  <!-- Gallery Hint -->
-  <div class="gallery-hint">
-    Scroll to explore
+  <!-- HINT -->
+
+  <div class="scroll-hint">
+    Drag to explore
   </div>
 
 </section>
@@ -638,51 +638,51 @@ body {
 <script>
 
 /* =========================================
-   EXPEDITION DATA
+   SLIDE DATA
 ========================================= */
 
 const slides = [
 
   {
-    img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
-    heading: "Where the ice remembers",
-    sub: "Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
-    location: "Svalbard, Norway"
+    img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
+    heading:"Where the ice remembers",
+    sub:"Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
+    location:"Svalbard, Norway"
   },
 
   {
-    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
-    heading: "Cliffs that outlast the wind",
-    sub: "The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
-    location: "Faroe Islands"
+    img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
+    heading:"Cliffs that outlast the wind",
+    sub:"The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
+    location:"Faroe Islands"
   },
 
   {
-    img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
-    heading: "Granite against the sky",
-    sub: "Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
-    location: "Patagonia, Chile"
+    img:"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
+    heading:"Granite against the sky",
+    sub:"Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
+    location:"Patagonia, Chile"
   },
 
   {
-    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
-    heading: "A quiet the size of a valley",
-    sub: "Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
-    location: "Fiordland, New Zealand"
+    img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
+    heading:"A quiet the size of a valley",
+    sub:"Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
+    location:"Fiordland, New Zealand"
   },
 
   {
-    img: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
-    heading: "Fire under permanent frost",
-    sub: "Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
-    location: "Kamchatka, Russia"
+    img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
+    heading:"Fire under permanent frost",
+    sub:"Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
+    location:"Kamchatka, Russia"
   },
 
   {
-    img: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
-    heading: "A desert carved from cold",
-    sub: "Ladakh, India — high mountain passes and monasteries above the clouds.",
-    location: "Ladakh, India"
+    img:"https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
+    heading:"A desert carved from cold",
+    sub:"Ladakh, India — high mountain passes and monasteries above the clouds.",
+    location:"Ladakh, India"
   }
 
 ];
@@ -701,18 +701,21 @@ const heading =
 const sub =
   document.getElementById("heroSub");
 
-const locationText =
+const location =
   document.getElementById("heroLocation");
 
-const heroContent =
+const content =
   document.getElementById("heroContent");
 
 const progressBar =
   document.getElementById("progressBar");
 
 const backgrounds = [
+
   document.getElementById("bgA"),
+
   document.getElementById("bgB")
+
 ];
 
 
@@ -721,56 +724,65 @@ const backgrounds = [
 ========================================= */
 
 let current = 0;
+
 let activeBackground = 0;
 
-let autoplayTimer = null;
+let autoplay;
 
-let progressTimer = null;
+let progressAnimation;
 
-const AUTO_PLAY_TIME = 5000;
+const AUTO_TIME = 5000;
 
 
 /* =========================================
-   CREATE GALLERY
+   CREATE SLIDER
 ========================================= */
 
-function createGallery() {
+function createSlider(){
 
-  slides.forEach((slide, index) => {
+  slides.forEach((slide,index)=>{
 
-    const item =
+    const card =
       document.createElement("div");
 
-    item.className = "gallery-item";
+    card.className =
+      "gallery-item";
 
-    if (index === 0) {
-      item.classList.add("active");
+    card.dataset.index =
+      index;
+
+    if(index === 0){
+
+      card.classList.add("active");
+
     }
 
-    item.dataset.index = index;
+    card.innerHTML = `
 
-    item.innerHTML = `
       <img
-        class="gallery-image"
         src="${slide.img}"
         alt="${slide.heading}"
-        loading="${index === 0 ? "eager" : "lazy"}"
+        draggable="false"
       >
 
-      <div class="gallery-number">
-        ${String(index + 1).padStart(2, "0")}
-      </div>
+      <span class="number">
+        ${String(index + 1).padStart(2,"0")}
+      </span>
+
     `;
 
 
-    item.addEventListener("click", () => {
+    card.addEventListener(
+      "click",
+      ()=>{
 
-      selectSlide(index, true);
+        selectSlide(index,true);
 
-    });
+      }
+    );
 
 
-    gallery.appendChild(item);
+    gallery.appendChild(card);
 
   });
 
@@ -778,74 +790,67 @@ function createGallery() {
 
 
 /* =========================================
-   CHANGE BACKGROUND
+   BACKGROUND CHANGE
 ========================================= */
 
-function changeBackground(index) {
+function changeBackground(index){
 
-  const nextBg =
-    backgrounds[1 - activeBackground];
+  const next =
+    backgrounds[1-activeBackground];
 
-  const oldBg =
+  const old =
     backgrounds[activeBackground];
 
 
-  nextBg.style.backgroundImage =
+  next.style.backgroundImage =
     `url("${slides[index].img}")`;
 
-  nextBg.classList.remove("active");
+
+  next.classList.remove("active");
+
+  next.style.opacity = "0";
+
+  next.style.transform =
+    "scale(1.1) translateY(-3%)";
 
 
-  /*
-    Reset starting position.
-    Image starts slightly above
-    and settles downward.
-  */
-
-  nextBg.style.transform =
-    "scale(1.10) translateY(-3%)";
+  next.offsetHeight;
 
 
-  nextBg.style.opacity = "0";
+  requestAnimationFrame(()=>{
 
+    next.classList.add("active");
 
-  /* Force repaint */
+    next.style.opacity = "1";
 
-  nextBg.offsetHeight;
-
-
-  requestAnimationFrame(() => {
-
-    nextBg.classList.add("active");
-
-    nextBg.style.opacity = "1";
-
-    nextBg.style.transform =
+    next.style.transform =
       "scale(1) translateY(2%)";
 
   });
 
 
-  oldBg.classList.remove("active");
+  old.classList.remove("active");
 
-  oldBg.style.opacity = "0";
+  old.style.opacity = "0";
 
 
   activeBackground =
-    1 - activeBackground;
+    1-activeBackground;
 }
 
 
 /* =========================================
-   CHANGE TEXT
+   TEXT CHANGE
 ========================================= */
 
-function changeText(index) {
+function changeText(index){
 
-  heroContent.classList.add("content-changing");
+  content.classList.add(
+    "content-changing"
+  );
 
 
-  setTimeout(() => {
+  setTimeout(()=>{
 
     heading.textContent =
       slides[index].heading;
@@ -853,32 +858,33 @@ function changeText(index) {
     sub.textContent =
       slides[index].sub;
 
-    locationText.textContent =
+    location.textContent =
       slides[index].location;
 
 
-    heroContent.classList.remove(
+    content.classList.remove(
       "content-changing"
     );
 
-  }, 280);
-
+  },280);
 }
 
 
 /* =========================================
-   UPDATE ACTIVE CARD
+   ACTIVE CARD
 ========================================= */
 
-function updateGallery(index) {
+function updateActiveCard(index){
 
-  const items =
-    gallery.querySelectorAll(".gallery-item");
+  const cards =
+    gallery.querySelectorAll(
+      ".gallery-item"
+    );
 
 
-  items.forEach((item, i) => {
+  cards.forEach((card,i)=>{
 
-    item.classList.toggle(
+    card.classList.toggle(
       "active",
       i === index
     );
@@ -886,19 +892,30 @@ function updateGallery(index) {
   });
 
 
+  const activeCard =
+    cards[index];
+
+
   /*
-    Automatically bring selected
-    image into the visible center.
+    MOST IMPORTANT PART:
+
+    Active image always moves
+    to the LEFT edge.
   */
 
-  const selected =
-    items[index];
+  if(activeCard){
 
-  if (selected) {
+    const leftPosition =
+      activeCard.offsetLeft -
+      gallery.offsetLeft;
 
-    selected.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
+
+    gallery.scrollTo({
+
+      left:leftPosition,
+
+      behavior:"smooth"
+
     });
 
   }
@@ -910,28 +927,18 @@ function updateGallery(index) {
    SELECT SLIDE
 ========================================= */
 
-function selectSlide(index, manual = false) {
-
-  if (index === current && !manual) {
-    return;
-  }
-
+function selectSlide(index,manual=false){
 
   current = index;
-
 
   changeBackground(index);
 
   changeText(index);
 
-  updateGallery(index);
+  updateActiveCard(index);
 
 
-  /*
-    Manual click resets autoplay.
-  */
-
-  if (manual) {
+  if(manual){
 
     resetAutoplay();
 
@@ -941,13 +948,13 @@ function selectSlide(index, manual = false) {
 
 
 /* =========================================
-   NEXT SLIDE
+   NEXT
 ========================================= */
 
-function nextSlide() {
+function nextSlide(){
 
   const next =
-    (current + 1) % slides.length;
+    (current+1)%slides.length;
 
   selectSlide(next);
 
@@ -955,14 +962,14 @@ function nextSlide() {
 
 
 /* =========================================
-   PREVIOUS SLIDE
+   PREVIOUS
 ========================================= */
 
-function previousSlide() {
+function previousSlide(){
 
   const previous =
-    (current - 1 + slides.length)
-    % slides.length;
+    (current-1+slides.length)
+    %slides.length;
 
   selectSlide(previous);
 
@@ -973,15 +980,16 @@ function previousSlide() {
    AUTOPLAY
 ========================================= */
 
-function startAutoplay() {
+function startAutoplay(){
 
-  clearInterval(autoplayTimer);
+  clearInterval(autoplay);
 
-  autoplayTimer =
+  autoplay =
     setInterval(
       nextSlide,
-      AUTO_PLAY_TIME
+      AUTO_TIME
     );
+
 
   startProgress();
 
@@ -992,14 +1000,16 @@ function startAutoplay() {
    RESET AUTOPLAY
 ========================================= */
 
-function resetAutoplay() {
+function resetAutoplay(){
 
-  clearInterval(autoplayTimer);
+  clearInterval(autoplay);
 
-  clearInterval(progressTimer);
+  cancelAnimationFrame(
+    progressAnimation
+  );
 
-  progressBar.style.width = "0%";
-
+  progressBar.style.width =
+    "0%";
 
   startAutoplay();
 
@@ -1007,74 +1017,81 @@ function resetAutoplay() {
 
 
 /* =========================================
-   PROGRESS BAR
+   PROGRESS
 ========================================= */
 
-function startProgress() {
+function startProgress(){
 
-  let start =
+  const start =
     performance.now();
 
 
-  progressBar.style.width = "0%";
-
-
-  function animate(now) {
+  function animate(time){
 
     const elapsed =
-      now - start;
+      time-start;
+
 
     const percent =
       Math.min(
-        (elapsed / AUTO_PLAY_TIME) * 100,
+        elapsed/AUTO_TIME*100,
         100
       );
 
 
     progressBar.style.width =
-      percent + "%";
+      percent+"%";
 
 
-    if (percent < 100) {
+    if(percent<100){
 
-      progressTimer =
-        requestAnimationFrame(animate);
+      progressAnimation =
+        requestAnimationFrame(
+          animate
+        );
 
     }
 
   }
 
 
-  progressTimer =
-    requestAnimationFrame(animate);
+  progressAnimation =
+    requestAnimationFrame(
+      animate
+    );
 
 }
 
 
 /* =========================================
    MOUSE WHEEL
-   Manual vertical navigation
+   Vertical wheel becomes
+   horizontal slider
 ========================================= */
 
 gallery.addEventListener(
   "wheel",
-  event => {
+  event=>{
 
     event.preventDefault();
 
 
-    if (
-      Math.abs(event.deltaY) < 5
-    ) {
+    if(
+      Math.abs(event.deltaY) < 5 &&
+      Math.abs(event.deltaX) < 5
+    ){
       return;
     }
 
 
-    if (event.deltaY > 0) {
+    if(
+      event.deltaY > 0 ||
+      event.deltaX > 0
+    ){
 
       nextSlide();
 
-    } else {
+    }else{
 
       previousSlide();
 
@@ -1085,87 +1102,37 @@ gallery.addEventListener(
 
   },
   {
-    passive: false
+    passive:false
   }
 );
 
 
 /* =========================================
-   TOUCH / SWIPE
+   DRAG
 ========================================= */
 
-let touchStartY = 0;
+let dragging = false;
 
-gallery.addEventListener(
-  "touchstart",
-  event => {
+let startX = 0;
 
-    touchStartY =
-      event.touches[0].clientY;
-
-  },
-  {
-    passive: true
-  }
-);
-
-
-gallery.addEventListener(
-  "touchend",
-  event => {
-
-    const touchEndY =
-      event.changedTouches[0].clientY;
-
-    const difference =
-      touchStartY - touchEndY;
-
-
-    if (Math.abs(difference) < 40) {
-      return;
-    }
-
-
-    if (difference > 0) {
-
-      nextSlide();
-
-    } else {
-
-      previousSlide();
-
-    }
-
-
-    resetAutoplay();
-
-  },
-  {
-    passive: true
-  }
-);
-
-
-/* =========================================
-   DRAG TO SCROLL
-========================================= */
-
-let isDragging = false;
-let dragStart = 0;
-let scrollStart = 0;
+let startScroll = 0;
 
 
 gallery.addEventListener(
   "pointerdown",
-  event => {
+  event=>{
 
-    isDragging = true;
+    dragging = true;
 
-    gallery.classList.add("dragging");
+    gallery.classList.add(
+      "dragging"
+    );
 
-    dragStart = event.clientY;
+    startX =
+      event.clientX;
 
-    scrollStart = gallery.scrollTop;
+    startScroll =
+      gallery.scrollLeft;
 
     gallery.setPointerCapture(
       event.pointerId
@@ -1177,19 +1144,19 @@ gallery.addEventListener(
 
 gallery.addEventListener(
   "pointermove",
-  event => {
+  event=>{
 
-    if (!isDragging) {
+    if(!dragging){
       return;
     }
 
 
     const distance =
-      event.clientY - dragStart;
+      event.clientX-startX;
 
 
-    gallery.scrollTop =
-      scrollStart - distance;
+    gallery.scrollLeft =
+      startScroll-distance;
 
   }
 );
@@ -1197,14 +1164,125 @@ gallery.addEventListener(
 
 gallery.addEventListener(
   "pointerup",
-  () => {
+  event=>{
 
-    isDragging = false;
+    dragging = false;
 
     gallery.classList.remove(
       "dragging"
     );
 
+    snapToNearest();
+
+    resetAutoplay();
+
+  }
+);
+
+
+/* =========================================
+   SNAP TO NEAREST CARD
+========================================= */
+
+function snapToNearest(){
+
+  const cards =
+    [...gallery.querySelectorAll(
+      ".gallery-item"
+    )];
+
+
+  let nearestIndex = 0;
+
+  let nearestDistance =
+    Infinity;
+
+
+  cards.forEach((card,index)=>{
+
+    const distance =
+      Math.abs(
+        card.offsetLeft -
+        gallery.scrollLeft
+      );
+
+
+    if(distance<nearestDistance){
+
+      nearestDistance =
+        distance;
+
+      nearestIndex =
+        index;
+
+    }
+
+  });
+
+
+  selectSlide(
+    nearestIndex
+  );
+
+}
+
+
+/* =========================================
+   TOUCH SWIPE
+========================================= */
+
+let touchStartX = 0;
+
+
+gallery.addEventListener(
+  "touchstart",
+  event=>{
+
+    touchStartX =
+      event.touches[0].clientX;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+gallery.addEventListener(
+  "touchend",
+  event=>{
+
+    const endX =
+      event.changedTouches[0].clientX;
+
+
+    const difference =
+      touchStartX-endX;
+
+
+    if(Math.abs(difference)<40){
+
+      return;
+
+    }
+
+
+    if(difference>0){
+
+      nextSlide();
+
+    }else{
+
+      previousSlide();
+
+    }
+
+
+    resetAutoplay();
+
+  },
+  {
+    passive:true
   }
 );
 
@@ -1215,9 +1293,9 @@ gallery.addEventListener(
 
 document.addEventListener(
   "keydown",
-  event => {
+  event=>{
 
-    if (event.key === "ArrowDown") {
+    if(event.key==="ArrowRight"){
 
       nextSlide();
 
@@ -1226,7 +1304,7 @@ document.addEventListener(
     }
 
 
-    if (event.key === "ArrowUp") {
+    if(event.key==="ArrowLeft"){
 
       previousSlide();
 
@@ -1239,16 +1317,18 @@ document.addEventListener(
 
 
 /* =========================================
-   PAUSE WHEN MOUSE OVER GALLERY
+   PAUSE ON HOVER
 ========================================= */
 
 gallery.addEventListener(
   "mouseenter",
-  () => {
+  ()=>{
 
-    clearInterval(autoplayTimer);
+    clearInterval(autoplay);
 
-    clearInterval(progressTimer);
+    cancelAnimationFrame(
+      progressAnimation
+    );
 
   }
 );
@@ -1256,7 +1336,7 @@ gallery.addEventListener(
 
 gallery.addEventListener(
   "mouseleave",
-  () => {
+  ()=>{
 
     startAutoplay();
 
@@ -1265,20 +1345,24 @@ gallery.addEventListener(
 
 
 /* =========================================
-   INITIALIZE
+   INIT
 ========================================= */
 
-function init() {
+function init(){
 
   backgrounds[0].style.backgroundImage =
     `url("${slides[0].img}")`;
 
+  backgrounds[0].style.opacity =
+    "1";
+
   backgrounds[0].style.transform =
     "scale(1) translateY(2%)";
 
-  createGallery();
 
-  updateGallery(0);
+  createSlider();
+
+  updateActiveCard(0);
 
   startAutoplay();
 
