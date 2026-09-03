@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northbound Expeditions — Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #14201E;
+    --parchment: #F1EAD9;
+    --stone: rgba(241,234,217,0.68);
+    --gold: #C9973E;
+    --scrim: 20,32,30;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--ink);}
+  body{font-family:'Work Sans', sans-serif;}
+
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:560px;
+    max-height:920px;
+    overflow:hidden;
+    background:var(--ink);
+    color:var(--parchment);
+  }
+
+  .hero-bg{
+    position:absolute; inset:0;
+    background-size:cover;
+    background-position:center;
+    transition:opacity 1.15s ease;
+  }
+  #bgA{opacity:1; z-index:1;}
+  #bgB{opacity:0; z-index:1;}
+
+  .hero-scrim{
+    position:absolute; inset:0; z-index:2;
+    background:linear-gradient(100deg,
+      rgba(var(--scrim),0.94) 0%,
+      rgba(var(--scrim),0.72) 32%,
+      rgba(var(--scrim),0.30) 58%,
+      rgba(var(--scrim),0.05) 78%);
+  }
+
+  .hero-content{
+    position:absolute;
+    left:5%;
+    right:46%;
+    bottom:12%;
+    z-index:3;
+  }
+
+  .hero-heading{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.5rem, 3.6vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 16px;
+    transition:opacity .5s ease;
+  }
+
+  .hero-sub{
+    font-size:clamp(0.82rem, 1.6vw, 1rem);
+    line-height:1.6;
+    color:var(--stone);
+    margin:0 0 22px;
+    transition:opacity .5s ease;
+  }
+
+  .hero-progress{
+    width:110px; height:2px;
+    background:rgba(241,234,217,0.22);
+    border-radius:2px;
+    overflow:hidden;
+    position:relative;
+  }
+  .hero-progress::after{
+    content:'';
+    position:absolute; left:0; top:0; bottom:0; width:0%;
+    background:var(--gold);
+    animation:fillbar 5s linear infinite;
+  }
+  @keyframes fillbar{ from{width:0%} to{width:100%} }
+
+  .hero-strip{
+    position:absolute;
+    right:5%;
+    bottom:12%;
+    z-index:3;
+    display:flex;
+    align-items:flex-end;
+    gap:20px;
+    width:min(38vw, 460px);
+    height:min(46vh, 320px);
+    overflow:hidden;
+    pointer-events:none;
+  }
+
+  .thumb{
+    position:relative;
+    flex-shrink:0;
+    width:min(19vw, 160px);
+    height:100%;
+    border-radius:28px;
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 20px 44px rgba(0,0,0,0.4);
+    transform-origin:center bottom;
+    transition:transform .95s cubic-bezier(.6,0,.3,1), opacity .95s ease;
+  }
+  .thumb:nth-child(3){ opacity:0.85; }
+  .thumb:nth-child(4){ opacity:0.6; }
+
+  .thumb.enter{ opacity:0; transform:translateX(30px); }
+  .thumb.dock{ transform:translate(-24px, 46px) scale(2.5); opacity:0; }
+
+  @media (max-width:760px){
+    .hero-content{ left:5%; right:52%; bottom:9%; }
+    .hero-strip{
+      right:4%;
+      bottom:9%;
+      width:min(44vw, 230px);
+      height:min(34vh, 230px);
+      gap:12px;
+    }
+    .thumb{ width:min(24vw, 100px); border-radius:20px; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .hero-bg, .hero-heading, .hero-sub, .thumb{ transition:none !important; }
+    .hero-progress::after{ animation:none !important; width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg" id="bgA"></div>
+  <div class="hero-bg" id="bgB"></div>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-heading" id="heroHeading"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="hero-progress" id="heroProgress"></div>
+  </div>
+
+  <div class="hero-strip" id="heroStrip"></div>
+</section>
+
+<script>
+  const slides = [
+    {
+      img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
+      heading: 'Where the ice remembers',
+      sub: 'Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
+      heading: 'Cliffs that outlast the wind',
+      sub: 'The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
+      heading: 'Granite against the sky',
+      sub: 'Torres del Paine, Patagonia — glacial towers standing over turquoise water.'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
+      heading: 'A quiet the size of a valley',
+      sub: 'Fiordland, New Zealand — rainforest and mist folded into ancient fjords.'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
+      heading: 'Fire under permanent frost',
+      sub: 'Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
+      heading: 'A desert carved from cold',
+      sub: 'Ladakh, India — high mountain passes and monasteries above the clouds.'
+    }
+  ];
+
+  const VISIBLE = 4;
+  const strip = document.getElementById('heroStrip');
+  const heading = document.getElementById('heroHeading');
+  const sub = document.getElementById('heroSub');
+  const bgs = [document.getElementById('bgA'), document.getElementById('bgB')];
+
+  let current = 0;
+  let activeBg = 0;
+
+  function imgFor(i){ return slides[((i % slides.length) + slides.length) % slides.length].img; }
+
+  function setText(i){
+    heading.textContent = slides[i].heading;
+    sub.textContent = slides[i].sub;
+  }
+
+  function fadeText(i){
+    heading.style.opacity = 0;
+    sub.style.opacity = 0;
+    setTimeout(() => {
+      setText(i);
+      heading.style.opacity = 1;
+      sub.style.opacity = 1;
+    }, 320);
+  }
+
+  function init(){
+    bgs[0].style.backgroundImage = `url(${slides[0].img})`;
+    setText(0);
+    for(let k = 1; k <= VISIBLE; k++){
+      const t = document.createElement('div');
+      t.className = 'thumb';
+      t.style.backgroundImage = `url(${imgFor(k)})`;
+      strip.appendChild(t);
+    }
+  }
+
+  function tick(){
+    const nextIndex = (current + 1) % slides.length;
+
+    const showing = bgs[activeBg];
+    const hidden = bgs[1 - activeBg];
+    hidden.style.backgroundImage = `url(${slides[nextIndex].img})`;
+    hidden.style.opacity = 1;
+    showing.style.opacity = 0;
+    activeBg = 1 - activeBg;
+
+    fadeText(nextIndex);
+
+    const first = strip.firstElementChild;
+    if(first){
+      first.classList.add('dock');
+      setTimeout(() => {
+        first.remove();
+        const newIndex = current + 1 + VISIBLE;
+        const t = document.createElement('div');
+        t.className = 'thumb enter';
+        t.style.backgroundImage = `url(${imgFor(newIndex)})`;
+        strip.appendChild(t);
+        requestAnimationFrame(() => requestAnimationFrame(() => t.classList.remove('enter')));
+      }, 900);
+    }
+
+    current = nextIndex;
+  }
+
+  init();
+  setInterval(tick, 5000);
+</script>
+
+</body>
+</html>
