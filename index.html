@@ -3,39 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Northbound Expeditions — Hero</title>
+<title>Northbound Expeditions</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-
-:root{
-  --ink:#14201E;
-  --parchment:#F1EAD9;
-  --stone:rgba(241,234,217,0.68);
-  --gold:#C9973E;
-  --scrim:20,32,30;
+:root {
+  --ink: #14201e;
+  --cream: #f1ead9;
+  --muted: rgba(241, 234, 217, .68);
+  --gold: #c9973e;
+  --dark: rgba(20, 32, 30, .92);
 }
 
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
 html,
-body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  background:var(--ink);
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
 }
 
-body{
-  font-family:'Work Sans',sans-serif;
+body {
+  font-family: "Work Sans", sans-serif;
+  overflow: hidden;
 }
 
 
@@ -43,19 +40,15 @@ body{
    HERO
 ========================= */
 
-.hero{
-  position:relative;
-  width:100%;
-  height:100vh;
-  height:100dvh;
-
-  min-height:560px;
-  max-height:920px;
-
-  overflow:hidden;
-
-  background:var(--ink);
-  color:var(--parchment);
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 560px;
+  overflow: hidden;
+  color: var(--cream);
+  background: var(--ink);
 }
 
 
@@ -63,294 +56,404 @@ body{
    BACKGROUND
 ========================= */
 
-.hero-bg{
-  position:absolute;
-  inset:0;
+.hero-bg {
+  position: absolute;
+  inset: -4%;
+  z-index: 1;
 
-  background-size:cover;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 
-  /* Image stays visually lower */
-  background-position:center bottom;
+  opacity: 0;
 
-  background-repeat:no-repeat;
-
-  opacity:0;
-
-  transform:
-    scale(1.10)
-    translateY(-2%);
+  transform: scale(1.08) translateY(-2%);
 
   transition:
-    opacity 1.15s ease,
-    transform 5s cubic-bezier(.22,.61,.36,1);
-
-  will-change:opacity,transform;
+    opacity 1s ease,
+    transform 5s cubic-bezier(.22, .61, .36, 1);
 }
 
-#bgA{
-  opacity:1;
-  z-index:1;
-}
-
-#bgB{
-  opacity:0;
-  z-index:1;
+.hero-bg.active {
+  opacity: 1;
+  transform: scale(1) translateY(2%);
 }
 
 
 /* =========================
-   DARK SCRIM
+   DARK GRADIENT
 ========================= */
 
-.hero-scrim{
-  position:absolute;
-  inset:0;
-
-  z-index:2;
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 
   background:
     linear-gradient(
       100deg,
-      rgba(var(--scrim),0.94) 0%,
-      rgba(var(--scrim),0.72) 32%,
-      rgba(var(--scrim),0.30) 58%,
-      rgba(var(--scrim),0.05) 78%
+      rgba(20, 32, 30, .95) 0%,
+      rgba(20, 32, 30, .76) 30%,
+      rgba(20, 32, 30, .34) 58%,
+      rgba(20, 32, 30, .08) 82%
     );
 }
 
 
 /* =========================
-   HERO CONTENT
-   PERFECT CENTER
+   CONTENT
 ========================= */
 
-.hero-content{
-  position:absolute;
+.hero-content {
+  position: absolute;
+  left: 6%;
+  top: 50%;
+  transform: translateY(-50%);
 
-  left:5%;
-  right:46%;
+  width: min(520px, 43vw);
 
-  top:50%;
-  bottom:auto;
-
-  transform:translateY(-50%);
-
-  z-index:3;
-
-  max-width:700px;
+  z-index: 5;
 }
 
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-/* =========================
-   HEADING
-========================= */
+  margin-bottom: 22px;
 
-.hero-heading{
-  font-family:'Fraunces',serif;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 
-  font-style:italic;
-  font-weight:500;
+  color: var(--gold);
+}
 
-  font-size:
-    clamp(
-      1.8rem,
-      3.6vw,
-      3.4rem
-    );
+.hero-kicker::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--gold);
+}
 
-  line-height:1.08;
+.hero-heading {
+  margin: 0 0 18px;
 
-  margin:0 0 16px;
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 500;
 
-  opacity:1;
+  font-size: clamp(2rem, 4.5vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -.025em;
 
   transition:
-    opacity .5s ease,
-    transform .5s ease;
+    opacity .45s ease,
+    transform .55s ease;
 }
 
+.hero-sub {
+  max-width: 500px;
 
-/* =========================
-   DESCRIPTION
-========================= */
+  margin: 0 0 30px;
 
-.hero-sub{
-  font-size:
-    clamp(
-      0.82rem,
-      1.6vw,
-      1rem
-    );
+  font-size: clamp(.82rem, 1.3vw, 1rem);
+  line-height: 1.75;
 
-  line-height:1.6;
-
-  color:var(--stone);
-
-  margin:0 0 22px;
-
-  max-width:600px;
-
-  opacity:1;
+  color: var(--muted);
 
   transition:
+    opacity .45s ease,
+    transform .55s ease;
+}
+
+
+/* =========================
+   LOCATION
+========================= */
+
+.hero-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+
+  color: rgba(241, 234, 217, .52);
+}
+
+.hero-location span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--gold);
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery {
+  position: absolute;
+
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  z-index: 6;
+
+  width: min(470px, 39vw);
+  height: min(72vh, 590px);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 70px 18px 70px 10px;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  cursor: grab;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery.dragging {
+  cursor: grabbing;
+}
+
+
+/* =========================
+   GALLERY ITEM
+========================= */
+
+.gallery-item {
+  position: relative;
+
+  width: min(250px, 19vw);
+  height: 310px;
+
+  margin-left: auto;
+  margin-bottom: 20px;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  background: #222;
+
+  border: 1px solid rgba(241, 234, 217, .12);
+
+  opacity: .52;
+
+  transform:
+    scale(.88)
+    translateX(12px);
+
+  transition:
+    transform .7s cubic-bezier(.22, .61, .36, 1),
     opacity .5s ease,
-    transform .5s ease;
+    border-color .5s ease,
+    box-shadow .5s ease;
+
+  cursor: pointer;
 }
 
+.gallery-item:hover {
+  opacity: .82;
 
-/* =========================
-   PROGRESS BAR
-========================= */
-
-.hero-progress{
-  width:110px;
-  height:2px;
-
-  background:
-    rgba(241,234,217,0.22);
-
-  border-radius:2px;
-
-  overflow:hidden;
-
-  position:relative;
+  transform:
+    scale(.93)
+    translateX(0);
 }
 
-.hero-progress::after{
-  content:'';
+.gallery-item.active {
+  opacity: 1;
 
-  position:absolute;
+  transform:
+    scale(1)
+    translateX(0);
 
-  left:0;
-  top:0;
-  bottom:0;
-
-  width:0%;
-
-  background:var(--gold);
-
-  animation:
-    fillbar 5s linear infinite;
-}
-
-@keyframes fillbar{
-
-  from{
-    width:0%;
-  }
-
-  to{
-    width:100%;
-  }
-
-}
-
-
-/* =========================
-   IMAGE STRIP
-   PERFECT CENTER
-========================= */
-
-.hero-strip{
-  position:absolute;
-
-  right:5%;
-
-  top:50%;
-  bottom:auto;
-
-  transform:translateY(-50%);
-
-  z-index:3;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:20px;
-
-  width:min(38vw,460px);
-
-  height:min(46vh,320px);
-
-  overflow:hidden;
-
-  pointer-events:none;
-}
-
-
-/* =========================
-   THUMBNAILS
-========================= */
-
-.thumb{
-  position:relative;
-
-  flex-shrink:0;
-
-  width:min(19vw,160px);
-
-  height:100%;
-
-  border-radius:28px;
-
-  background-size:cover;
-
-  background-position:center;
-
-  background-repeat:no-repeat;
+  border-color:
+    rgba(201, 151, 62, .8);
 
   box-shadow:
-    0 20px 44px rgba(0,0,0,0.4);
+    0 25px 70px rgba(0, 0, 0, .45);
+}
 
-  transform-origin:center bottom;
+
+/* =========================
+   IMAGE
+========================= */
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
 
   transition:
-    transform .95s cubic-bezier(.6,0,.3,1),
-    opacity .95s ease;
-
-  will-change:transform,opacity;
+    transform 1s cubic-bezier(.22, .61, .36, 1);
 }
 
-
-/* Depth */
-
-.thumb:nth-child(3){
-  opacity:.85;
-}
-
-.thumb:nth-child(4){
-  opacity:.6;
+.gallery-item:hover .gallery-image {
+  transform: scale(1.05);
 }
 
 
 /* =========================
-   NEW IMAGE
-   COMES FROM BELOW
+   IMAGE GRADIENT
 ========================= */
 
-.thumb.enter{
+.gallery-item::after {
+  content: "";
 
-  opacity:0;
+  position: absolute;
+  inset: 0;
 
-  transform:
-    translate(30px,80px)
-    scale(.92);
+  background:
+    linear-gradient(
+      to top,
+      rgba(20, 32, 30, .65),
+      transparent 55%
+    );
+
+  pointer-events: none;
 }
 
 
 /* =========================
-   OLD IMAGE
-   MOVES DOWNWARD
+   NUMBER
 ========================= */
 
-.thumb.dock{
+.gallery-number {
+  position: absolute;
 
-  transform:
-    translate(-24px,90px)
-    scale(2.5);
+  left: 18px;
+  bottom: 17px;
 
-  opacity:0;
+  z-index: 2;
+
+  font-size: 10px;
+  letter-spacing: .18em;
+
+  color: rgba(241, 234, 217, .8);
+}
+
+
+/* =========================
+   SELECT INDICATOR
+========================= */
+
+.gallery-item.active .gallery-number {
+  color: var(--gold);
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.hero-progress {
+  position: absolute;
+
+  left: 6%;
+  bottom: 7%;
+
+  z-index: 7;
+
+  width: 120px;
+  height: 2px;
+
+  overflow: hidden;
+
+  background:
+    rgba(241, 234, 217, .18);
+}
+
+.hero-progress-bar {
+  width: 0;
+  height: 100%;
+
+  background: var(--gold);
+
+  transition: width .1s linear;
+}
+
+
+/* =========================
+   NAVIGATION HINT
+========================= */
+
+.gallery-hint {
+  position: absolute;
+
+  right: 5%;
+  bottom: 7%;
+
+  z-index: 7;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  color: rgba(241, 234, 217, .45);
+}
+
+.gallery-hint::before {
+  content: "↕";
+
+  font-size: 18px;
+  color: var(--gold);
+}
+
+
+/* =========================
+   TEXT ANIMATION
+========================= */
+
+.content-changing .hero-heading,
+.content-changing .hero-sub,
+.content-changing .hero-location {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .hero-content {
+    left: 5%;
+    width: 46vw;
+  }
+
+  .gallery {
+    right: 3%;
+    width: 42vw;
+  }
+
+  .gallery-item {
+    width: 22vw;
+    height: 270px;
+  }
 }
 
 
@@ -358,63 +461,76 @@ body{
    MOBILE
 ========================= */
 
-@media (max-width:760px){
+@media (max-width: 700px) {
 
-  .hero-content{
-
-    left:5%;
-    right:52%;
-
-    top:50%;
-    bottom:auto;
-
-    transform:translateY(-50%);
+  body {
+    overflow: hidden;
   }
 
-
-  .hero-strip{
-
-    right:4%;
-
-    top:50%;
-    bottom:auto;
-
-    transform:translateY(-50%);
-
-    width:min(44vw,230px);
-
-    height:min(34vh,230px);
-
-    gap:12px;
+  .hero {
+    min-height: 600px;
   }
 
-
-  .thumb{
-
-    width:min(24vw,100px);
-
-    border-radius:20px;
-  }
-
-
-  .hero-heading{
-
-    font-size:
-      clamp(
-        1.45rem,
-        5.5vw,
-        2.3rem
+  .hero-overlay {
+    background:
+      linear-gradient(
+        100deg,
+        rgba(20, 32, 30, .94) 0%,
+        rgba(20, 32, 30, .65) 52%,
+        rgba(20, 32, 30, .18) 100%
       );
   }
 
+  .hero-content {
+    left: 6%;
+    top: 50%;
 
-  .hero-sub{
+    width: 45vw;
 
-    font-size:.78rem;
-
-    line-height:1.5;
+    transform: translateY(-50%);
   }
 
+  .hero-heading {
+    font-size: clamp(1.65rem, 6vw, 2.5rem);
+  }
+
+  .hero-sub {
+    font-size: .76rem;
+    line-height: 1.55;
+  }
+
+  .hero-kicker {
+    font-size: 8px;
+    margin-bottom: 15px;
+  }
+
+  .gallery {
+    right: 3%;
+    width: 45vw;
+
+    height: 70vh;
+
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .gallery-item {
+    width: 38vw;
+    height: 210px;
+
+    border-radius: 21px;
+
+    margin-bottom: 14px;
+  }
+
+  .gallery-hint {
+    display: none;
+  }
+
+  .hero-progress {
+    left: 6%;
+    bottom: 5%;
+  }
 }
 
 
@@ -422,30 +538,29 @@ body{
    SMALL MOBILE
 ========================= */
 
-@media (max-width:480px){
+@media (max-width: 480px) {
 
-  .hero-content{
-
-    left:6%;
-    right:53%;
+  .hero-content {
+    left: 6%;
+    width: 43vw;
   }
 
-  .hero-strip{
-
-    right:3%;
-
-    width:45vw;
-
-    height:220px;
+  .hero-heading {
+    font-size: 1.55rem;
   }
 
-  .thumb{
-
-    width:90px;
-
-    border-radius:18px;
+  .hero-sub {
+    font-size: .7rem;
   }
 
+  .gallery {
+    width: 47vw;
+  }
+
+  .gallery-item {
+    width: 40vw;
+    height: 185px;
+  }
 }
 
 
@@ -453,478 +568,724 @@ body{
    REDUCED MOTION
 ========================= */
 
-@media (prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion: reduce) {
 
-  .hero-bg,
-  .hero-heading,
-  .hero-sub,
-  .thumb{
-
-    transition:none !important;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
   }
-
-  .hero-progress::after{
-
-    animation:none !important;
-
-    width:100%;
-  }
-
 }
-
 </style>
 </head>
 
 
 <body>
 
-
 <section class="hero">
 
-  <!-- Background A -->
-  <div
-    class="hero-bg"
-    id="bgA">
-  </div>
+  <!-- Background layers -->
+  <div class="hero-bg active" id="bgA"></div>
+  <div class="hero-bg" id="bgB"></div>
+
+  <!-- Dark overlay -->
+  <div class="hero-overlay"></div>
 
 
-  <!-- Background B -->
-  <div
-    class="hero-bg"
-    id="bgB">
-  </div>
+  <!-- Hero Content -->
+  <div class="hero-content" id="heroContent">
 
+    <div class="hero-kicker">
+      Northbound Expeditions
+    </div>
 
-  <!-- Dark Gradient -->
-  <div class="hero-scrim"></div>
-
-
-  <!-- CENTERED CONTENT -->
-  <div class="hero-content">
-
-    <h1
-      class="hero-heading"
-      id="heroHeading">
+    <h1 class="hero-heading" id="heroHeading">
+      Where the ice remembers
     </h1>
 
-    <p
-      class="hero-sub"
-      id="heroSub">
+    <p class="hero-sub" id="heroSub">
+      Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.
     </p>
 
-    <div
-      class="hero-progress"
-      id="heroProgress">
+    <div class="hero-location">
+      <span></span>
+      <strong id="heroLocation">Svalbard, Norway</strong>
     </div>
 
   </div>
 
 
-  <!-- IMAGE STRIP -->
-  <div
-    class="hero-strip"
-    id="heroStrip">
+  <!-- Vertical Gallery -->
+  <div class="gallery" id="gallery"></div>
+
+
+  <!-- Progress -->
+  <div class="hero-progress">
+    <div class="hero-progress-bar" id="progressBar"></div>
+  </div>
+
+
+  <!-- Gallery Hint -->
+  <div class="gallery-hint">
+    Scroll to explore
   </div>
 
 </section>
 
 
-
 <script>
 
-
-/* =========================
-   SLIDES
-========================= */
+/* =========================================
+   EXPEDITION DATA
+========================================= */
 
 const slides = [
 
   {
-    img:
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'Where the ice remembers',
-
-    sub:
-      'Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.'
+    img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
+    heading: "Where the ice remembers",
+    sub: "Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
+    location: "Svalbard, Norway"
   },
 
-
   {
-    img:
-      'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'Cliffs that outlast the wind',
-
-    sub:
-      'The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.'
+    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
+    heading: "Cliffs that outlast the wind",
+    sub: "The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
+    location: "Faroe Islands"
   },
 
-
   {
-    img:
-      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'Granite against the sky',
-
-    sub:
-      'Torres del Paine, Patagonia — glacial towers standing over turquoise water.'
+    img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
+    heading: "Granite against the sky",
+    sub: "Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
+    location: "Patagonia, Chile"
   },
 
-
   {
-    img:
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'A quiet the size of a valley',
-
-    sub:
-      'Fiordland, New Zealand — rainforest and mist folded into ancient fjords.'
+    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
+    heading: "A quiet the size of a valley",
+    sub: "Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
+    location: "Fiordland, New Zealand"
   },
 
-
   {
-    img:
-      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'Fire under permanent frost',
-
-    sub:
-      'Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.'
+    img: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
+    heading: "Fire under permanent frost",
+    sub: "Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
+    location: "Kamchatka, Russia"
   },
 
-
   {
-    img:
-      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
-
-    heading:
-      'A desert carved from cold',
-
-    sub:
-      'Ladakh, India — high mountain passes and monasteries above the clouds.'
+    img: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
+    heading: "A desert carved from cold",
+    sub: "Ladakh, India — high mountain passes and monasteries above the clouds.",
+    location: "Ladakh, India"
   }
 
 ];
 
 
+/* =========================================
+   ELEMENTS
+========================================= */
 
-/* =========================
-   SETTINGS
-========================= */
-
-const VISIBLE = 4;
-
-const strip =
-  document.getElementById('heroStrip');
+const gallery =
+  document.getElementById("gallery");
 
 const heading =
-  document.getElementById('heroHeading');
+  document.getElementById("heroHeading");
 
 const sub =
-  document.getElementById('heroSub');
+  document.getElementById("heroSub");
 
-const bgs = [
+const locationText =
+  document.getElementById("heroLocation");
 
-  document.getElementById('bgA'),
+const heroContent =
+  document.getElementById("heroContent");
 
-  document.getElementById('bgB')
+const progressBar =
+  document.getElementById("progressBar");
 
+const backgrounds = [
+  document.getElementById("bgA"),
+  document.getElementById("bgB")
 ];
 
 
+/* =========================================
+   STATE
+========================================= */
+
 let current = 0;
+let activeBackground = 0;
 
-let activeBg = 0;
+let autoplayTimer = null;
 
+let progressTimer = null;
 
-
-/* =========================
-   IMAGE HELPER
-========================= */
-
-function imgFor(i){
-
-  return slides[
-    (
-      i % slides.length
-      + slides.length
-    )
-    %
-    slides.length
-  ].img;
-
-}
+const AUTO_PLAY_TIME = 5000;
 
 
+/* =========================================
+   CREATE GALLERY
+========================================= */
 
-/* =========================
-   SET TEXT
-========================= */
+function createGallery() {
 
-function setText(i){
+  slides.forEach((slide, index) => {
 
-  heading.textContent =
-    slides[i].heading;
+    const item =
+      document.createElement("div");
 
-  sub.textContent =
-    slides[i].sub;
+    item.className = "gallery-item";
 
-}
+    if (index === 0) {
+      item.classList.add("active");
+    }
 
+    item.dataset.index = index;
 
+    item.innerHTML = `
+      <img
+        class="gallery-image"
+        src="${slide.img}"
+        alt="${slide.heading}"
+        loading="${index === 0 ? "eager" : "lazy"}"
+      >
 
-/* =========================
-   TEXT FADE
-========================= */
-
-function fadeText(i){
-
-  heading.style.opacity = 0;
-
-  sub.style.opacity = 0;
-
-
-  heading.style.transform =
-    'translateY(12px)';
-
-  sub.style.transform =
-    'translateY(12px)';
+      <div class="gallery-number">
+        ${String(index + 1).padStart(2, "0")}
+      </div>
+    `;
 
 
-  setTimeout(() => {
+    item.addEventListener("click", () => {
 
-    setText(i);
+      selectSlide(index, true);
 
-    heading.style.opacity = 1;
+    });
 
-    sub.style.opacity = 1;
 
-    heading.style.transform =
-      'translateY(0)';
+    gallery.appendChild(item);
 
-    sub.style.transform =
-      'translateY(0)';
-
-  },320);
+  });
 
 }
 
 
+/* =========================================
+   CHANGE BACKGROUND
+========================================= */
 
-/* =========================
-   INITIALIZE
-========================= */
+function changeBackground(index) {
 
-function init(){
+  const nextBg =
+    backgrounds[1 - activeBackground];
 
-  /* First background */
-
-  bgs[0].style.backgroundImage =
-    `url(${slides[0].img})`;
-
-  bgs[0].style.transform =
-    'scale(1.08) translateY(-2%)';
+  const oldBg =
+    backgrounds[activeBackground];
 
 
-  /* Text */
+  nextBg.style.backgroundImage =
+    `url("${slides[index].img}")`;
 
-  setText(0);
-
-
-  /* Thumbnails */
-
-  for(
-    let k = 1;
-    k <= VISIBLE;
-    k++
-  ){
-
-    const t =
-      document.createElement('div');
-
-    t.className =
-      'thumb';
-
-    t.style.backgroundImage =
-      `url(${imgFor(k)})`;
-
-    strip.appendChild(t);
-
-  }
-
-}
-
-
-
-/* =========================
-   SLIDE TICK
-========================= */
-
-function tick(){
-
-  const nextIndex =
-    (current + 1)
-    %
-    slides.length;
-
-
-  /* -------------------------
-     BACKGROUND
-  ------------------------- */
-
-  const showing =
-    bgs[activeBg];
-
-  const hidden =
-    bgs[1 - activeBg];
-
-
-  hidden.style.backgroundImage =
-    `url(${slides[nextIndex].img})`;
-
-
-  /* Start from slightly above */
-
-  hidden.style.transform =
-    'scale(1.10) translateY(-3%)';
-
-  hidden.style.opacity = 0;
+  nextBg.classList.remove("active");
 
 
   /*
-    Force browser to register
-    starting position
+    Reset starting position.
+    Image starts slightly above
+    and settles downward.
   */
 
-  hidden.offsetHeight;
+  nextBg.style.transform =
+    "scale(1.10) translateY(-3%)";
 
 
-  /* Fade + move DOWN */
+  nextBg.style.opacity = "0";
+
+
+  /* Force repaint */
+
+  nextBg.offsetHeight;
+
 
   requestAnimationFrame(() => {
 
-    hidden.style.opacity = 1;
+    nextBg.classList.add("active");
 
-    hidden.style.transform =
-      'scale(1) translateY(2%)';
+    nextBg.style.opacity = "1";
+
+    nextBg.style.transform =
+      "scale(1) translateY(2%)";
 
   });
 
 
-  /* Hide old background */
+  oldBg.classList.remove("active");
 
-  showing.style.opacity = 0;
-
-
-  activeBg =
-    1 - activeBg;
+  oldBg.style.opacity = "0";
 
 
-
-  /* -------------------------
-     TEXT
-  ------------------------- */
-
-  fadeText(nextIndex);
+  activeBackground =
+    1 - activeBackground;
+}
 
 
+/* =========================================
+   CHANGE TEXT
+========================================= */
 
-  /* -------------------------
-     THUMBNAIL
-  ------------------------- */
+function changeText(index) {
 
-  const first =
-    strip.firstElementChild;
-
-
-  if(first){
-
-    /*
-      First image moves
-      DOWN + zooms
-    */
-
-    first.classList.add('dock');
+  heroContent.classList.add("content-changing");
 
 
-    setTimeout(() => {
+  setTimeout(() => {
 
-      first.remove();
+    heading.textContent =
+      slides[index].heading;
 
+    sub.textContent =
+      slides[index].sub;
 
-      const newIndex =
-        current
-        +
-        1
-        +
-        VISIBLE;
-
-
-      const t =
-        document.createElement('div');
-
-      t.className =
-        'thumb enter';
+    locationText.textContent =
+      slides[index].location;
 
 
-      t.style.backgroundImage =
-        `url(${imgFor(newIndex)})`;
+    heroContent.classList.remove(
+      "content-changing"
+    );
 
-
-      strip.appendChild(t);
-
-
-      /*
-        Animate new image
-        from DOWN position
-      */
-
-      requestAnimationFrame(() => {
-
-        requestAnimationFrame(() => {
-
-          t.classList.remove('enter');
-
-        });
-
-      });
-
-    },900);
-
-  }
-
-
-  /* Update */
-
-  current =
-    nextIndex;
+  }, 280);
 
 }
 
 
+/* =========================================
+   UPDATE ACTIVE CARD
+========================================= */
 
-/* =========================
-   START
-========================= */
+function updateGallery(index) {
 
-init();
+  const items =
+    gallery.querySelectorAll(".gallery-item");
 
 
-/*
-  Change slide every 5 seconds
-*/
+  items.forEach((item, i) => {
 
-setInterval(
-  tick,
-  5000
+    item.classList.toggle(
+      "active",
+      i === index
+    );
+
+  });
+
+
+  /*
+    Automatically bring selected
+    image into the visible center.
+  */
+
+  const selected =
+    items[index];
+
+  if (selected) {
+
+    selected.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+
+}
+
+
+/* =========================================
+   SELECT SLIDE
+========================================= */
+
+function selectSlide(index, manual = false) {
+
+  if (index === current && !manual) {
+    return;
+  }
+
+
+  current = index;
+
+
+  changeBackground(index);
+
+  changeText(index);
+
+  updateGallery(index);
+
+
+  /*
+    Manual click resets autoplay.
+  */
+
+  if (manual) {
+
+    resetAutoplay();
+
+  }
+
+}
+
+
+/* =========================================
+   NEXT SLIDE
+========================================= */
+
+function nextSlide() {
+
+  const next =
+    (current + 1) % slides.length;
+
+  selectSlide(next);
+
+}
+
+
+/* =========================================
+   PREVIOUS SLIDE
+========================================= */
+
+function previousSlide() {
+
+  const previous =
+    (current - 1 + slides.length)
+    % slides.length;
+
+  selectSlide(previous);
+
+}
+
+
+/* =========================================
+   AUTOPLAY
+========================================= */
+
+function startAutoplay() {
+
+  clearInterval(autoplayTimer);
+
+  autoplayTimer =
+    setInterval(
+      nextSlide,
+      AUTO_PLAY_TIME
+    );
+
+  startProgress();
+
+}
+
+
+/* =========================================
+   RESET AUTOPLAY
+========================================= */
+
+function resetAutoplay() {
+
+  clearInterval(autoplayTimer);
+
+  clearInterval(progressTimer);
+
+  progressBar.style.width = "0%";
+
+
+  startAutoplay();
+
+}
+
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
+function startProgress() {
+
+  let start =
+    performance.now();
+
+
+  progressBar.style.width = "0%";
+
+
+  function animate(now) {
+
+    const elapsed =
+      now - start;
+
+    const percent =
+      Math.min(
+        (elapsed / AUTO_PLAY_TIME) * 100,
+        100
+      );
+
+
+    progressBar.style.width =
+      percent + "%";
+
+
+    if (percent < 100) {
+
+      progressTimer =
+        requestAnimationFrame(animate);
+
+    }
+
+  }
+
+
+  progressTimer =
+    requestAnimationFrame(animate);
+
+}
+
+
+/* =========================================
+   MOUSE WHEEL
+   Manual vertical navigation
+========================================= */
+
+gallery.addEventListener(
+  "wheel",
+  event => {
+
+    event.preventDefault();
+
+
+    if (
+      Math.abs(event.deltaY) < 5
+    ) {
+      return;
+    }
+
+
+    if (event.deltaY > 0) {
+
+      nextSlide();
+
+    } else {
+
+      previousSlide();
+
+    }
+
+
+    resetAutoplay();
+
+  },
+  {
+    passive: false
+  }
 );
 
+
+/* =========================================
+   TOUCH / SWIPE
+========================================= */
+
+let touchStartY = 0;
+
+gallery.addEventListener(
+  "touchstart",
+  event => {
+
+    touchStartY =
+      event.touches[0].clientY;
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+gallery.addEventListener(
+  "touchend",
+  event => {
+
+    const touchEndY =
+      event.changedTouches[0].clientY;
+
+    const difference =
+      touchStartY - touchEndY;
+
+
+    if (Math.abs(difference) < 40) {
+      return;
+    }
+
+
+    if (difference > 0) {
+
+      nextSlide();
+
+    } else {
+
+      previousSlide();
+
+    }
+
+
+    resetAutoplay();
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+/* =========================================
+   DRAG TO SCROLL
+========================================= */
+
+let isDragging = false;
+let dragStart = 0;
+let scrollStart = 0;
+
+
+gallery.addEventListener(
+  "pointerdown",
+  event => {
+
+    isDragging = true;
+
+    gallery.classList.add("dragging");
+
+    dragStart = event.clientY;
+
+    scrollStart = gallery.scrollTop;
+
+    gallery.setPointerCapture(
+      event.pointerId
+    );
+
+  }
+);
+
+
+gallery.addEventListener(
+  "pointermove",
+  event => {
+
+    if (!isDragging) {
+      return;
+    }
+
+
+    const distance =
+      event.clientY - dragStart;
+
+
+    gallery.scrollTop =
+      scrollStart - distance;
+
+  }
+);
+
+
+gallery.addEventListener(
+  "pointerup",
+  () => {
+
+    isDragging = false;
+
+    gallery.classList.remove(
+      "dragging"
+    );
+
+  }
+);
+
+
+/* =========================================
+   KEYBOARD
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "ArrowDown") {
+
+      nextSlide();
+
+      resetAutoplay();
+
+    }
+
+
+    if (event.key === "ArrowUp") {
+
+      previousSlide();
+
+      resetAutoplay();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   PAUSE WHEN MOUSE OVER GALLERY
+========================================= */
+
+gallery.addEventListener(
+  "mouseenter",
+  () => {
+
+    clearInterval(autoplayTimer);
+
+    clearInterval(progressTimer);
+
+  }
+);
+
+
+gallery.addEventListener(
+  "mouseleave",
+  () => {
+
+    startAutoplay();
+
+  }
+);
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+function init() {
+
+  backgrounds[0].style.backgroundImage =
+    `url("${slides[0].img}")`;
+
+  backgrounds[0].style.transform =
+    "scale(1) translateY(2%)";
+
+  createGallery();
+
+  updateGallery(0);
+
+  startAutoplay();
+
+}
+
+
+init();
 
 </script>
 
