@@ -3,455 +3,741 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northbound Expeditions — Hero</title>
+<title>Wanderlust — True Infinite Loop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink: #14201E;
-    --parchment: #F1EAD9;
-    --stone: rgba(241,234,217,0.7);
-    --gold: #C9973E;
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
   }
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; height:100%; background:var(--ink); overflow-x:hidden; }
-  body{ font-family:'Work Sans', sans-serif; }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
-  .hero{
-    position:relative;
-    width:100%;
-    height:100vh;
-    height:100dvh;
-    min-height:420px;
-    overflow:hidden;
-    background:var(--ink);
-    color:var(--parchment);
-  }
-
-  /* fixed-size design, scaled uniformly to fill any viewport so the
-     layout looks identical on mobile and desktop */
-  .hero-canvas{
-    position:absolute;
-    top:0; left:0;
-    width:1280px;
-    height:720px;
-    transform-origin:top left;
+  :root {
+    --card-width: 160px;
+    --card-height: 220px;
+    --card-gap: 14px;
+    --card-radius: 10px;
+    --transition-bg: 900ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-card: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-text: 700ms cubic-bezier(0.4, 0, 0.2, 1);
+    --slider-bottom: 8vh;
+    --slider-right: 6vw;
+    --text-max-width: 520px;
   }
 
-  /* ---------- background ---------- */
-  .hero-bg{
-    position:absolute; inset:0;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transition:opacity 1.3s ease;
-    will-change:transform, opacity;
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 48px;
+    mix-blend-mode: difference;
   }
-  .hero-bg.is-active{
-    opacity:1;
-    animation:kenMove 6s linear forwards;
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 500; letter-spacing: 3px;
+    text-transform: uppercase;
   }
-  @keyframes kenMove{
-    from{ transform:scale(1.05) translateY(-2%); }
-    to{ transform:scale(1) translateY(2%); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; opacity: 0.7; transition: opacity 0.3s;
+    text-decoration: none;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 24px; border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px; transition: all 0.3s;
+  }
+  .nav-cta:hover { background: #fff; color: #0a0a0a; }
+
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden;
   }
 
-  .hero-overlay{
-    position:absolute; inset:0; z-index:1;
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    will-change: transform, opacity;
+    transition: opacity var(--transition-bg);
+  }
+  .hero-bg.layer-1 { z-index: 1; }
+  .hero-bg.layer-2 { z-index: 2; opacity: 0; }
+  .hero-bg.active { opacity: 1; }
+  .hero-bg.inactive { opacity: 0; }
+
+  @keyframes bgDrift {
+    0%   { transform: scale(1.05) translateY(-2%); }
+    100% { transform: scale(1.0)  translateY(2%); }
+  }
+  .hero-bg.active {
+    animation: bgDrift 18s ease-in-out infinite alternate;
+  }
+
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 3;
     background:
-      linear-gradient(100deg, rgba(20,32,30,0.82) 0%, rgba(20,32,30,0.55) 38%, rgba(20,32,30,0.22) 62%, rgba(20,32,30,0.28) 100%);
-    pointer-events:none;
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0.55) 100%),
+      radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
   }
 
-  /* ---------- text ---------- */
-  .hero-text{
-    position:absolute;
-    left:80px;
-    top:50%;
-    transform:translateY(-50%);
-    width:480px;
-    z-index:2;
+  .hero-content {
+    position: absolute; z-index: 10;
+    top: 50%; left: 6vw;
+    transform: translateY(-50%);
+    max-width: var(--text-max-width);
+    pointer-events: none;
   }
-  .hero-location{
-    font-family:'Work Sans', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.28em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin:0 0 16px;
-    transition:opacity .5s ease, transform .5s ease;
+  .hero-location {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+    transition: opacity var(--transition-text), transform var(--transition-text);
   }
-  .hero-title{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:500;
-    font-size:54px;
-    line-height:1.08;
-    margin:0 0 18px;
-    transition:opacity .5s ease, transform .5s ease;
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 500; line-height: 1.05;
+    margin-bottom: 24px;
+    transition: opacity var(--transition-text), transform var(--transition-text);
   }
-  .hero-desc{
-    font-size:17px;
-    line-height:1.65;
-    color:var(--stone);
-    margin:0 0 26px;
-    transition:opacity .5s ease, transform .5s ease;
+  .hero-title em {
+    font-style: italic; font-weight: 400;
+    color: rgba(255,255,255,0.85);
   }
-  .hero-cta{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:15px;
-    font-weight:500;
-    color:var(--parchment);
-    text-decoration:none;
-    border-bottom:1px solid var(--gold);
-    padding-bottom:5px;
-    transition:opacity .5s ease, transform .5s ease, letter-spacing .3s ease;
+  .hero-description {
+    font-size: 15px; font-weight: 300; line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    max-width: 420px;
+    margin-bottom: 36px;
+    transition: opacity var(--transition-text), transform var(--transition-text);
   }
-  .hero-cta:hover{ letter-spacing:0.03em; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 16px 32px;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 100px;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+  }
+  .hero-cta:hover {
+    background: #fff; color: #0a0a0a;
+    border-color: #fff;
+  }
+  .hero-cta svg {
+    width: 14px; height: 14px;
+    transition: transform 0.3s;
+  }
+  .hero-cta:hover svg { transform: translateX(4px); }
 
-  .hero-text.is-switching .hero-location,
-  .hero-text.is-switching .hero-title,
-  .hero-text.is-switching .hero-desc,
-  .hero-text.is-switching .hero-cta{
-    opacity:0;
-    transform:translateY(10px);
+  .hero-content .anim-out {
+    opacity: 0; transform: translateY(12px);
+  }
+  .hero-content .anim-in {
+    opacity: 1; transform: translateY(0);
   }
 
-  /* ---------- vertical card stack ---------- */
-  .stack-wrap{
-    position:absolute;
-    right:90px;
-    top:50%;
-    transform:translateY(-50%);
-    z-index:2;
+  .slider-wrapper {
+    position: absolute; z-index: 20;
+    bottom: var(--slider-bottom);
+    right: var(--slider-right);
+    left: auto;
+    width: calc(100% - 12vw);
+    max-width: 900px;
   }
-  .stack{
-    position:relative;
+  .slider {
+    display: flex;
+    gap: var(--card-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
   }
-  .stack-card{
-    position:absolute;
-    top:0; left:0;
-    border-radius:18px;
-    overflow:hidden;
-    cursor:pointer;
-    box-shadow:0 18px 40px rgba(0,0,0,0.4);
+  .slider::-webkit-scrollbar { display: none; }
+  .slider.dragging { cursor: grabbing; scroll-behavior: auto; }
+  .slider.no-transition { scroll-behavior: auto; }
+
+  .slider-card {
+    flex: 0 0 var(--card-width);
+    height: var(--card-height);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    scroll-snap-align: start;
+    position: relative;
     transition:
-      top .75s cubic-bezier(.65,0,.35,1),
-      left .75s cubic-bezier(.65,0,.35,1),
-      width .75s cubic-bezier(.65,0,.35,1),
-      height .75s cubic-bezier(.65,0,.35,1),
-      opacity .6s ease,
-      filter .6s ease,
-      transform .3s ease;
+      opacity var(--transition-card),
+      transform var(--transition-card),
+      box-shadow var(--transition-card);
+    will-change: transform, opacity;
+    background: #1a1a1a;
   }
-  .stack-card img{
-    width:100%; height:100%;
-    object-fit:cover;
-    display:block;
-    pointer-events:none;
+  .slider-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    pointer-events: none;
   }
-  .stack-card:hover{ transform:scale(1.03); }
-  .stack-card[data-slot="0"]{
-    box-shadow:0 0 0 2px rgba(201,151,62,0.85), 0 22px 46px rgba(0,0,0,0.45);
-  }
-  .stack-card.entering{ opacity:0 !important; }
-  .stack-card.exiting{ opacity:0 !important; }
-
-  /* ---------- navbar ---------- */
-  .navbar{
-    position:absolute;
-    top:0; left:0; right:0;
-    z-index:5;
-    display:flex;
-    justify-content:center;
-    padding:26px 0;
-    background:transparent;
-    pointer-events:none;
-  }
-  .navbar-brand{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:500;
-    font-size:17px;
-    letter-spacing:0.05em;
-    color:var(--parchment);
-    background:transparent;
-    pointer-events:auto;
+  .slider-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: var(--card-radius);
+    border: 1.5px solid transparent;
+    transition: border-color var(--transition-card), box-shadow var(--transition-card);
+    pointer-events: none;
   }
 
-  @media (prefers-reduced-motion:reduce){
-    .hero-bg{ animation:none !important; transform:none !important; }
-    .stack-card, .hero-location, .hero-title, .hero-desc, .hero-cta{ transition:none !important; }
+  .slider-card.inactive {
+    opacity: 0.45;
+    transform: scale(0.97);
+  }
+  .slider-card.inactive:hover {
+    opacity: 0.7;
+    transform: scale(0.99);
+  }
+
+  .slider-card.active {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.25),
+      0 8px 32px rgba(0,0,0,0.4),
+      0 0 60px rgba(255,255,255,0.06);
+  }
+  .slider-card.active::after {
+    border-color: rgba(255,255,255,0.3);
+  }
+  .slider-card.active img {
+    transform: scale(1.03);
+  }
+
+  .card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 14px 12px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .slider-card.active .card-label,
+  .slider-card:hover .card-label { opacity: 1; }
+
+  .slider-progress {
+    position: absolute; bottom: calc(var(--slider-bottom) - 8px);
+    right: var(--slider-right);
+    display: flex; gap: 6px; z-index: 20;
+  }
+  .progress-dot {
+    width: 24px; height: 2px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    transition: background 0.4s, width 0.4s;
+    cursor: pointer;
+  }
+  .progress-dot.active {
+    background: rgba(255,255,255,0.9);
+    width: 36px;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    animation: hintPulse 2.5s ease-in-out infinite;
+  }
+  .scroll-hint-line {
+    width: 1px; height: 28px;
+    background: linear-gradient(transparent, rgba(255,255,255,0.4));
+  }
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  @media (max-width: 1024px) {
+    :root {
+      --card-width: 130px;
+      --card-height: 180px;
+      --card-gap: 10px;
+      --slider-bottom: 6vh;
+      --slider-right: 4vw;
+    }
+    .nav { padding: 20px 28px; }
+    .nav-links { gap: 24px; }
+    .hero-content { left: 5vw; }
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --card-width: 110px;
+      --card-height: 150px;
+      --card-gap: 8px;
+      --card-radius: 8px;
+      --slider-bottom: 5vh;
+      --slider-right: 3vw;
+    }
+    .nav { padding: 18px 20px; }
+    .nav-links { display: none; }
+    .hero-content { left: 6vw; right: 6vw; max-width: none; }
+    .scroll-hint { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 </head>
 <body>
 
-<section class="hero" aria-label="Destination showcase">
-  <div class="hero-canvas" id="heroCanvas">
-    <nav class="navbar" aria-label="Primary">
-      <span class="navbar-brand">Northbound</span>
-    </nav>
+<nav class="nav" role="navigation">
+  <div class="nav-logo">Wanderlust</div>
+  <ul class="nav-links">
+    <li><a href="#">Destinations</a></li>
+    <li><a href="#">Journeys</a></li>
+    <li><a href="#">Journal</a></li>
+  </ul>
+  <button class="nav-cta">Book Journey</button>
+</nav>
 
-    <div class="hero-bg" id="bgA" aria-hidden="true"></div>
-    <div class="hero-bg" id="bgB" aria-hidden="true"></div>
-    <div class="hero-overlay" aria-hidden="true"></div>
+<main>
+<section class="hero" id="hero">
+  <div class="hero-bg layer-1 active" id="bgLayer1"></div>
+  <div class="hero-bg layer-2 inactive" id="bgLayer2"></div>
+  <div class="hero-overlay"></div>
 
-    <div class="hero-text" id="heroText">
-      <p class="hero-location" id="heroLocation"></p>
-      <h1 class="hero-title" id="heroTitle"></h1>
-      <p class="hero-desc" id="heroDesc"></p>
-      <a href="#" class="hero-cta" id="heroCta"><span id="heroCtaLabel"></span> →</a>
-    </div>
+  <div class="hero-content" id="heroContent">
+    <p class="hero-location anim-in" id="heroLocation">Svalbard, Norway</p>
+    <h1 class="hero-title anim-in" id="heroTitle">Where the ice <em>remembers</em></h1>
+    <p class="hero-description anim-in" id="heroDescription">Polar landscapes, endless summer light, and wilderness at the edge of the Arctic.</p>
+    <button class="hero-cta anim-in" id="heroCta">
+      Explore Journey
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
 
-    <div class="stack-wrap">
-      <div class="stack" id="stack" role="listbox" aria-label="Destinations"></div>
-    </div>
+  <div class="slider-wrapper">
+    <div class="slider" id="slider" role="listbox"></div>
+  </div>
+
+  <div class="slider-progress" id="sliderProgress"></div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-line"></div>
   </div>
 </section>
+</main>
 
 <script>
-(function(){
-  const slides = [
+(() => {
+  'use strict';
+
+  const destinations = [
     {
-      img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
       location: 'Svalbard, Norway',
-      title: 'Where the ice remembers',
-      desc: 'Polar landscapes, endless summer light, and wilderness at the edge of the Arctic.',
-      cta: 'Explore the route'
+      title: 'Where the ice <em>remembers</em>',
+      description: 'Polar landscapes, endless summer light, and wilderness at the edge of the Arctic.',
+      image: 'https://picsum.photos/seed/arctic1/1920/1080',
+      thumb: 'https://picsum.photos/seed/arctic1/400/550'
     },
     {
-      img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
-      location: 'Faroe Islands',
-      title: 'Cliffs that outlast the wind',
-      desc: 'Turf-roofed villages tucked beneath sea cliffs older than memory.',
-      cta: 'Plan the crossing'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
       location: 'Patagonia, Chile',
-      title: 'Granite against the sky',
-      desc: 'Glacial towers standing watch over impossibly blue water.',
-      cta: 'Trace the trail'
+      title: 'The edge of the <em>world</em>',
+      description: 'Towering granite spires, ancient glaciers, and windswept plains.',
+      image: 'https://picsum.photos/seed/mountain2/1920/1080',
+      thumb: 'https://picsum.photos/seed/mountain2/400/550'
     },
     {
-      img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
-      location: 'Fiordland, New Zealand',
-      title: 'A quiet the size of a valley',
-      desc: 'Rainforest and mist folded into ancient, water-carved fjords.',
-      cta: 'Chart the fjord'
+      location: 'Kyoto, Japan',
+      title: 'Temples in <em>silence</em>',
+      description: 'Bamboo groves, moss gardens, and centuries-old shrines.',
+      image: 'https://picsum.photos/seed/japan3/1920/1080',
+      thumb: 'https://picsum.photos/seed/japan3/400/550'
     },
     {
-      img: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
-      location: 'Kamchatka, Russia',
-      title: 'Fire under permanent frost',
-      desc: 'Volcanoes and hot springs at the edge of the Pacific Ring of Fire.',
-      cta: 'Follow the ridge'
+      location: 'Santorini, Greece',
+      title: 'Light above the <em>sea</em>',
+      description: 'Whitewashed villages clinging to volcanic cliffs.',
+      image: 'https://picsum.photos/seed/greece4/1920/1080',
+      thumb: 'https://picsum.photos/seed/greece4/400/550'
     },
     {
-      img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
-      location: 'Ladakh, India',
-      title: 'A desert carved from cold',
-      desc: 'High mountain passes and monasteries suspended above the clouds.',
-      cta: 'Climb the pass'
+      location: 'Marrakech, Morocco',
+      title: 'Gardens of <em>terracotta</em>',
+      description: 'Saffron-scented medinas and riads hidden behind ancient walls.',
+      image: 'https://picsum.photos/seed/morocco5/1920/1080',
+      thumb: 'https://picsum.photos/seed/morocco5/400/550'
     }
   ];
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const AUTOPLAY_MS = 5500;
-  const CARD_RATIO = 1.85;                    // front card height = width * CARD_RATIO
-  const OFFSET_RATIOS = [0, 0.33, 0.56];       // each card's left offset, as a ratio of card width
-  const HEIGHT_RATIOS = [1, 0.84, 0.68];       // each card's height, relative to the front card
-  const OPACITIES     = [1, 0.55, 0.32];
-  const BRIGHTNESS    = [1.05, 0.72, 0.55];
-  const ZS            = [3, 2, 1];
+  const slider       = document.getElementById('slider');
+  const bgLayer1     = document.getElementById('bgLayer1');
+  const bgLayer2     = document.getElementById('bgLayer2');
+  const heroLocation = document.getElementById('heroLocation');
+  const heroTitle    = document.getElementById('heroTitle');
+  const heroDesc     = document.getElementById('heroDescription');
+  const heroCta      = document.getElementById('heroCta');
+  const progressWrap = document.getElementById('sliderProgress');
 
-  const stackEl = document.getElementById('stack');
-  const heroText = document.getElementById('heroText');
-  const bgs = [document.getElementById('bgA'), document.getElementById('bgB')];
-  const locationEl = document.getElementById('heroLocation');
-  const titleEl = document.getElementById('heroTitle');
-  const descEl = document.getElementById('heroDesc');
-  const ctaLabelEl = document.getElementById('heroCtaLabel');
+  let activeIndex    = 0;
+  let activeLayer    = 1;
+  let isDragging     = false;
+  let dragStartX     = 0;
+  let dragScrollLeft = 0;
+  let updateTimer    = null;
+  let autoplayTimer  = null;
+  let isReordering   = false;
 
-  let activeBg = 0;
-  let currentIndex = 0;
-  let stackCards = [];   // live DOM nodes, front-to-back
-  let autoplayTimer = null;
+  const TOTAL = destinations.length;
+  const BUFFER = 5; // কতগুলো extra card রাখব
 
-  function slideAt(i){
-    const len = slides.length;
-    return slides[((i % len) + len) % len];
-  }
+  /* ═══════════════════════════════════════
+     INITIAL BUILD
+     ═══════════════════════════════════════ */
+  function buildSlider() {
+    // প্রথমে BUFFER সংখ্যক card add করি
+    for (let i = 0; i < BUFFER; i++) {
+      createCard(i % TOTAL);
+    }
 
-  function getSlotDefs(){
-    const W = 240;
-    const H1 = Math.round(W * CARD_RATIO);
-    return OFFSET_RATIOS.map((ratio, i) => ({
-      left: Math.round(ratio * W),
-      width: W,
-      height: Math.round(H1 * HEIGHT_RATIOS[i]),
-      opacity: OPACITIES[i],
-      brightness: BRIGHTNESS[i],
-      z: ZS[i]
-    }));
-  }
-
-  const SLOT_DEF = getSlotDefs();
-
-  function sizeStack(){
-    const last = SLOT_DEF[SLOT_DEF.length - 1];
-    stackEl.style.width = (last.left + last.width) + 'px';
-    stackEl.style.height = SLOT_DEF[0].height + 'px';
-  }
-
-  function applySlot(card, slot){
-    const def = SLOT_DEF[slot];
-    card.style.width = def.width + 'px';
-    card.style.height = def.height + 'px';
-    card.style.left = def.left + 'px';
-    card.style.top = Math.round((SLOT_DEF[0].height - def.height) / 2) + 'px';
-    card.style.opacity = def.opacity;
-    card.style.filter = 'brightness(' + def.brightness + ') saturate(' + (0.6 + def.opacity * 0.4) + ')';
-    card.style.zIndex = def.z;
-    card.dataset.slot = slot;
-  }
-
-  function makeCard(idx, slot, entering){
-    const card = document.createElement('div');
-    card.className = 'stack-card' + (entering ? ' entering' : '');
-    card.setAttribute('role', 'option');
-    card.dataset.idx = idx;
-    const img = document.createElement('img');
-    img.src = slideAt(idx).img;
-    img.alt = slideAt(idx).location;
-    img.loading = slot === 0 ? 'eager' : 'lazy';
-    card.appendChild(img);
-    card.addEventListener('click', () => {
-      const clickedSlot = parseInt(card.dataset.slot, 10);
-      if (clickedSlot === 0) return;
-      rotate(clickedSlot);
-      resetAutoplay();
+    // Progress dots
+    destinations.forEach((dest, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.addEventListener('click', () => scrollToIndex(i));
+      progressWrap.appendChild(dot);
     });
-    applySlot(card, slot);
-    stackEl.appendChild(card);
+
+    preloadAndSetBg(destinations[0].image, bgLayer1);
+  }
+
+  function createCard(realIndex) {
+    const dest = destinations[realIndex];
+    const card = document.createElement('div');
+    card.className = 'slider-card';
+    card.setAttribute('role', 'option');
+    card.setAttribute('tabindex', '0');
+    card.dataset.realIndex = realIndex;
+
+    const img = document.createElement('img');
+    img.src = dest.thumb;
+    img.alt = dest.location;
+    img.loading = 'lazy';
+    img.onerror = function() {
+      this.src = `https://picsum.photos/seed/fb${realIndex}/400/550`;
+    };
+    card.appendChild(img);
+
+    const label = document.createElement('div');
+    label.className = 'card-label';
+    label.textContent = dest.location.split(',')[0];
+    card.appendChild(label);
+
+    card.addEventListener('click', () => {
+      if (isDragging) return;
+      scrollToThisCard(card);
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToThisCard(card);
+      }
+    });
+
+    slider.appendChild(card);
     return card;
   }
 
-  function buildStack(){
-    sizeStack();
-    for (let s = 0; s < SLOT_DEF.length; s++){
-      stackCards.push(makeCard(s, s, false));
+  /* ═══════════════════════════════════════
+     DYNAMIC REORDERING (TRUE INFINITE)
+     ═══════════════════════════════════════ */
+  function checkAndReorder() {
+    if (isReordering) return;
+
+    const cards = Array.from(slider.querySelectorAll('.slider-card'));
+    if (cards.length === 0) return;
+
+    const sliderRect = slider.getBoundingClientRect();
+    const sliderLeft = sliderRect.left;
+    const cardWidth = cards[0].offsetWidth;
+    const gap = parseFloat(getComputedStyle(slider).gap) || 14;
+    const step = cardWidth + gap;
+
+    // প্রথম card যদি viewport এর বাম প্রান্ত থেকে অনেক দূরে চলে যায়
+    const firstCard = cards[0];
+    const firstRect = firstCard.getBoundingClientRect();
+
+    if (firstRect.right < sliderLeft - step) {
+      // প্রথম card কে শেষে移ানো
+      isReordering = true;
+      slider.classList.add('no-transition');
+
+      const firstRealIndex = parseInt(firstCard.dataset.realIndex);
+      const nextIndex = (firstRealIndex + 1) % TOTAL;
+
+      // নতুন card শেষে add
+      createCard(nextIndex);
+
+      // প্রথম card remove
+      firstCard.remove();
+
+      // Scroll position adjust (এক card width কমিয়ে দিই)
+      slider.scrollLeft -= step;
+
+      requestAnimationFrame(() => {
+        slider.classList.remove('no-transition');
+        isReordering = false;
+      });
+    }
+
+    // শেষ card যদি viewport এর ডান প্রান্তের কাছে আসে
+    const lastCard = cards[cards.length - 1];
+    const lastRect = lastCard.getBoundingClientRect();
+
+    if (lastRect.left < sliderRect.right + step * 2) {
+      // আরো card add করি সামনে
+      const lastRealIndex = parseInt(lastCard.dataset.realIndex);
+      const nextIndex = (lastRealIndex + 1) % TOTAL;
+      createCard(nextIndex);
     }
   }
 
-  function rotate(steps){
-    const newCurrent = currentIndex + steps;
-    const survivors = [];
-    const filledSlots = new Set();
+  /* ═══════════════════════════════════════
+     DETECT ACTIVE
+     ═══════════════════════════════════════ */
+  function detectActiveCard() {
+    const cards = slider.querySelectorAll('.slider-card');
+    const sliderRect = slider.getBoundingClientRect();
+    const sliderLeft = sliderRect.left + 2;
 
-    stackCards.forEach((card) => {
-      const idx = parseInt(card.dataset.idx, 10);
-      const newSlot = idx - newCurrent;
-      if (newSlot >= 0 && newSlot < SLOT_DEF.length){
-        applySlot(card, newSlot);
-        filledSlots.add(newSlot);
-        survivors.push(card);
-      } else {
-        card.classList.add('exiting');
-        setTimeout(() => card.remove(), 650);
+    let closestCard = null;
+    let closestDist = Infinity;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const dist = Math.abs(rect.left - sliderLeft);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestCard = card;
       }
     });
 
-    for (let s = 0; s < SLOT_DEF.length; s++){
-      if (!filledSlots.has(s)){
-        const idx = newCurrent + s;
-        const entering = makeCard(idx, Math.min(s + 1, SLOT_DEF.length - 1), true);
-        survivors.push(entering);
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          entering.classList.remove('entering');
-          applySlot(entering, s);
-        }));
-      }
-    }
-
-    stackCards = survivors;
-    currentIndex = newCurrent;
-    crossfadeBg(slideAt(currentIndex).img);
-    switchText(slideAt(currentIndex));
+    return closestCard;
   }
 
-  function crossfadeBg(imgUrl){
-    const incoming = bgs[1 - activeBg];
-    const outgoing = bgs[activeBg];
-    incoming.style.backgroundImage = 'url(' + imgUrl + ')';
-    incoming.classList.remove('is-active');
-    void incoming.offsetWidth; // restart animation
-    incoming.classList.add('is-active');
-    outgoing.classList.remove('is-active');
-    activeBg = 1 - activeBg;
+  function setActiveByCard(card) {
+    if (!card) return;
+
+    const realIndex = parseInt(card.dataset.realIndex);
+    if (realIndex === activeIndex) return;
+
+    activeIndex = realIndex;
+    const dest = destinations[realIndex];
+
+    const cards = slider.querySelectorAll('.slider-card');
+    cards.forEach(c => {
+      const isThis = c === card;
+      c.classList.toggle('active', isThis);
+      c.classList.toggle('inactive', !isThis);
+    });
+
+    const dots = progressWrap.querySelectorAll('.progress-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === realIndex);
+    });
+
+    const incomingLayer = activeLayer === 1 ? bgLayer2 : bgLayer1;
+    const outgoingLayer = activeLayer === 1 ? bgLayer1 : bgLayer2;
+
+    preloadAndSetBg(dest.image, incomingLayer, () => {
+      incomingLayer.classList.remove('inactive');
+      incomingLayer.classList.add('active');
+      outgoingLayer.classList.remove('active');
+      outgoingLayer.classList.add('inactive');
+      activeLayer = activeLayer === 1 ? 2 : 1;
+    });
+
+    animateText(dest);
   }
 
-  function setText(slide){
-    locationEl.textContent = slide.location.toUpperCase();
-    titleEl.textContent = slide.title;
-    descEl.textContent = slide.desc;
-    ctaLabelEl.textContent = slide.cta;
+  function preloadAndSetBg(url, layer, callback) {
+    const img = new Image();
+    img.onload = () => {
+      layer.style.backgroundImage = `url(${url})`;
+      if (callback) callback();
+    };
+    img.onerror = () => {
+      const fb = url.replace(/seed\/[^/]+/, 'seed/fallback');
+      layer.style.backgroundImage = `url(${fb})`;
+      if (callback) callback();
+    };
+    img.src = url;
   }
 
-  function switchText(slide){
-    if (reduceMotion){ setText(slide); return; }
-    heroText.classList.add('is-switching');
+  function animateText(dest) {
+    const elements = [heroLocation, heroTitle, heroDesc, heroCta];
+    elements.forEach(el => {
+      el.classList.remove('anim-in');
+      el.classList.add('anim-out');
+    });
+
     setTimeout(() => {
-      setText(slide);
-      heroText.classList.remove('is-switching');
-    }, 260);
+      heroLocation.textContent = dest.location;
+      heroTitle.innerHTML = dest.title;
+      heroDesc.textContent = dest.description;
+
+      elements.forEach((el, i) => {
+        setTimeout(() => {
+          el.classList.remove('anim-out');
+          el.classList.add('anim-in');
+        }, i * 80);
+      });
+    }, 350);
   }
 
-  function resetAutoplay(){
-    clearTimeout(autoplayTimer);
-    scheduleAutoplay();
-  }
-  function scheduleAutoplay(){
-    autoplayTimer = setTimeout(() => {
-      rotate(1);
-      scheduleAutoplay();
-    }, AUTOPLAY_MS);
+  function scrollToThisCard(card) {
+    const sliderRect = slider.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const targetScroll = slider.scrollLeft + (cardRect.left - sliderRect.left);
+    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    resetAutoplay();
   }
 
-  const heroEl = document.querySelector('.hero');
-  const canvasEl = document.getElementById('heroCanvas');
-  const DESIGN_W = 1280;
-  const DESIGN_H = 720;
-
-  function fitCanvas(){
-    const vw = heroEl.clientWidth;
-    const vh = heroEl.clientHeight;
-    const scale = Math.max(vw / DESIGN_W, vh / DESIGN_H);
-    const scaledW = DESIGN_W * scale;
-    const scaledH = DESIGN_H * scale;
-    canvasEl.style.transform = 'scale(' + scale + ')';
-    canvasEl.style.left = Math.round((vw - scaledW) / 2) + 'px';
-    canvasEl.style.top = Math.round((vh - scaledH) / 2) + 'px';
+  function scrollToIndex(realIndex) {
+    const cards = slider.querySelectorAll('.slider-card');
+    const target = Array.from(cards).find(c => parseInt(c.dataset.realIndex) === realIndex);
+    if (target) scrollToThisCard(target);
   }
 
-  let resizeTimer = null;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(fitCanvas, 80);
+  /* ═══════════════════════════════════════
+     SCROLL HANDLER
+     ═══════════════════════════════════════ */
+  function onSliderScroll() {
+    if (updateTimer) cancelAnimationFrame(updateTimer);
+    updateTimer = requestAnimationFrame(() => {
+      checkAndReorder();
+
+      const activeCard = detectActiveCard();
+      if (activeCard) {
+        const realIndex = parseInt(activeCard.dataset.realIndex);
+        if (realIndex !== activeIndex) {
+          setActiveByCard(activeCard);
+        }
+      }
+    });
+  }
+
+  slider.addEventListener('scroll', onSliderScroll, { passive: true });
+
+  /* ═══════════════════════════════════════
+     MOUSE DRAG
+     ═══════════════════════════════════════ */
+  slider.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    slider.classList.add('dragging');
+    dragStartX = e.pageX - slider.offsetLeft;
+    dragScrollLeft = slider.scrollLeft;
   });
-  fitCanvas();
 
-  buildStack();
-  crossfadeBg(slides[0].img);
-  setText(slides[0]);
-  if (!reduceMotion) scheduleAutoplay();
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - dragStartX) * 1.5;
+    slider.scrollLeft = dragScrollLeft - walk;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      slider.classList.remove('dragging');
+      setTimeout(() => {
+        const activeCard = detectActiveCard();
+        if (activeCard) setActiveByCard(activeCard);
+      }, 100);
+    }
+  });
+
+  slider.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      slider.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const next = (activeIndex + 1) % TOTAL;
+      scrollToIndex(next);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prev = (activeIndex - 1 + TOTAL) % TOTAL;
+      scrollToIndex(prev);
+    }
+  });
+
+  /* ═══════════════════════════════════════
+     AUTOPLAY
+     ═══════════════════════════════════════ */
+  function startAutoplay() {
+    autoplayTimer = setInterval(() => {
+      const next = (activeIndex + 1) % TOTAL;
+      scrollToIndex(next);
+    }, 5000);
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    startAutoplay();
+  }
+
+  ['mousedown', 'touchstart', 'wheel', 'keydown'].forEach(evt => {
+    slider.addEventListener(evt, resetAutoplay, { passive: true });
+  });
+
+  /* ═══════════════════════════════════════
+     INIT
+     ═══════════════════════════════════════ */
+  buildSlider();
+
+  window.addEventListener('load', () => {
+    const cards = slider.querySelectorAll('.slider-card');
+    if (cards.length > 0) {
+      setActiveByCard(cards[0]);
+    }
+    startAutoplay();
+  });
+
 })();
 </script>
-
 </body>
 </html>
