@@ -3,261 +3,929 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Northbound Expeditions — Hero</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --ink: #14201E;
-    --parchment: #F1EAD9;
-    --stone: rgba(241,234,217,0.68);
-    --gold: #C9973E;
-    --scrim: 20,32,30;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;height:100%;background:var(--ink);}
-  body{font-family:'Work Sans', sans-serif;}
 
-  .hero{
-    position:relative;
-    width:100%;
-    height:100vh;
-    height:100dvh;
-    min-height:560px;
-    max-height:920px;
-    overflow:hidden;
-    background:var(--ink);
-    color:var(--parchment);
-  }
+:root{
+  --ink:#14201E;
+  --parchment:#F1EAD9;
+  --stone:rgba(241,234,217,0.68);
+  --gold:#C9973E;
+  --scrim:20,32,30;
+}
 
-  .hero-bg{
-    position:absolute; inset:0;
-    background-size:cover;
-    background-position:center;
-    transition:opacity 1.15s ease;
-  }
-  #bgA{opacity:1; z-index:1;}
-  #bgB{opacity:0; z-index:1;}
+*{
+  box-sizing:border-box;
+}
 
-  .hero-scrim{
-    position:absolute; inset:0; z-index:2;
-    background:linear-gradient(100deg,
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:var(--ink);
+}
+
+body{
+  font-family:'Work Sans',sans-serif;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  height:100dvh;
+
+  min-height:560px;
+  max-height:920px;
+
+  overflow:hidden;
+
+  background:var(--ink);
+  color:var(--parchment);
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+
+  background-size:cover;
+
+  /* Image stays visually lower */
+  background-position:center bottom;
+
+  background-repeat:no-repeat;
+
+  opacity:0;
+
+  transform:
+    scale(1.10)
+    translateY(-2%);
+
+  transition:
+    opacity 1.15s ease,
+    transform 5s cubic-bezier(.22,.61,.36,1);
+
+  will-change:opacity,transform;
+}
+
+#bgA{
+  opacity:1;
+  z-index:1;
+}
+
+#bgB{
+  opacity:0;
+  z-index:1;
+}
+
+
+/* =========================
+   DARK SCRIM
+========================= */
+
+.hero-scrim{
+  position:absolute;
+  inset:0;
+
+  z-index:2;
+
+  background:
+    linear-gradient(
+      100deg,
       rgba(var(--scrim),0.94) 0%,
       rgba(var(--scrim),0.72) 32%,
       rgba(var(--scrim),0.30) 58%,
-      rgba(var(--scrim),0.05) 78%);
+      rgba(var(--scrim),0.05) 78%
+    );
+}
+
+
+/* =========================
+   HERO CONTENT
+   PERFECT CENTER
+========================= */
+
+.hero-content{
+  position:absolute;
+
+  left:5%;
+  right:46%;
+
+  top:50%;
+  bottom:auto;
+
+  transform:translateY(-50%);
+
+  z-index:3;
+
+  max-width:700px;
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.hero-heading{
+  font-family:'Fraunces',serif;
+
+  font-style:italic;
+  font-weight:500;
+
+  font-size:
+    clamp(
+      1.8rem,
+      3.6vw,
+      3.4rem
+    );
+
+  line-height:1.08;
+
+  margin:0 0 16px;
+
+  opacity:1;
+
+  transition:
+    opacity .5s ease,
+    transform .5s ease;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.hero-sub{
+  font-size:
+    clamp(
+      0.82rem,
+      1.6vw,
+      1rem
+    );
+
+  line-height:1.6;
+
+  color:var(--stone);
+
+  margin:0 0 22px;
+
+  max-width:600px;
+
+  opacity:1;
+
+  transition:
+    opacity .5s ease,
+    transform .5s ease;
+}
+
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.hero-progress{
+  width:110px;
+  height:2px;
+
+  background:
+    rgba(241,234,217,0.22);
+
+  border-radius:2px;
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+.hero-progress::after{
+  content:'';
+
+  position:absolute;
+
+  left:0;
+  top:0;
+  bottom:0;
+
+  width:0%;
+
+  background:var(--gold);
+
+  animation:
+    fillbar 5s linear infinite;
+}
+
+@keyframes fillbar{
+
+  from{
+    width:0%;
   }
+
+  to{
+    width:100%;
+  }
+
+}
+
+
+/* =========================
+   IMAGE STRIP
+   PERFECT CENTER
+========================= */
+
+.hero-strip{
+  position:absolute;
+
+  right:5%;
+
+  top:50%;
+  bottom:auto;
+
+  transform:translateY(-50%);
+
+  z-index:3;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:20px;
+
+  width:min(38vw,460px);
+
+  height:min(46vh,320px);
+
+  overflow:hidden;
+
+  pointer-events:none;
+}
+
+
+/* =========================
+   THUMBNAILS
+========================= */
+
+.thumb{
+  position:relative;
+
+  flex-shrink:0;
+
+  width:min(19vw,160px);
+
+  height:100%;
+
+  border-radius:28px;
+
+  background-size:cover;
+
+  background-position:center;
+
+  background-repeat:no-repeat;
+
+  box-shadow:
+    0 20px 44px rgba(0,0,0,0.4);
+
+  transform-origin:center bottom;
+
+  transition:
+    transform .95s cubic-bezier(.6,0,.3,1),
+    opacity .95s ease;
+
+  will-change:transform,opacity;
+}
+
+
+/* Depth */
+
+.thumb:nth-child(3){
+  opacity:.85;
+}
+
+.thumb:nth-child(4){
+  opacity:.6;
+}
+
+
+/* =========================
+   NEW IMAGE
+   COMES FROM BELOW
+========================= */
+
+.thumb.enter{
+
+  opacity:0;
+
+  transform:
+    translate(30px,80px)
+    scale(.92);
+}
+
+
+/* =========================
+   OLD IMAGE
+   MOVES DOWNWARD
+========================= */
+
+.thumb.dock{
+
+  transform:
+    translate(-24px,90px)
+    scale(2.5);
+
+  opacity:0;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:760px){
 
   .hero-content{
-    position:absolute;
+
     left:5%;
-    right:46%;
-    bottom:12%;
-    z-index:3;
+    right:52%;
+
+    top:50%;
+    bottom:auto;
+
+    transform:translateY(-50%);
   }
 
-  .hero-heading{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:500;
-    font-size:clamp(1.5rem, 3.6vw, 3.4rem);
-    line-height:1.08;
-    margin:0 0 16px;
-    transition:opacity .5s ease;
-  }
-
-  .hero-sub{
-    font-size:clamp(0.82rem, 1.6vw, 1rem);
-    line-height:1.6;
-    color:var(--stone);
-    margin:0 0 22px;
-    transition:opacity .5s ease;
-  }
-
-  .hero-progress{
-    width:110px; height:2px;
-    background:rgba(241,234,217,0.22);
-    border-radius:2px;
-    overflow:hidden;
-    position:relative;
-  }
-  .hero-progress::after{
-    content:'';
-    position:absolute; left:0; top:0; bottom:0; width:0%;
-    background:var(--gold);
-    animation:fillbar 5s linear infinite;
-  }
-  @keyframes fillbar{ from{width:0%} to{width:100%} }
 
   .hero-strip{
-    position:absolute;
-    right:5%;
-    bottom:12%;
-    z-index:3;
-    display:flex;
-    align-items:flex-end;
-    gap:20px;
-    width:min(38vw, 460px);
-    height:min(46vh, 320px);
-    overflow:hidden;
-    pointer-events:none;
+
+    right:4%;
+
+    top:50%;
+    bottom:auto;
+
+    transform:translateY(-50%);
+
+    width:min(44vw,230px);
+
+    height:min(34vh,230px);
+
+    gap:12px;
+  }
+
+
+  .thumb{
+
+    width:min(24vw,100px);
+
+    border-radius:20px;
+  }
+
+
+  .hero-heading{
+
+    font-size:
+      clamp(
+        1.45rem,
+        5.5vw,
+        2.3rem
+      );
+  }
+
+
+  .hero-sub{
+
+    font-size:.78rem;
+
+    line-height:1.5;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width:480px){
+
+  .hero-content{
+
+    left:6%;
+    right:53%;
+  }
+
+  .hero-strip{
+
+    right:3%;
+
+    width:45vw;
+
+    height:220px;
   }
 
   .thumb{
-    position:relative;
-    flex-shrink:0;
-    width:min(19vw, 160px);
-    height:100%;
-    border-radius:28px;
-    background-size:cover;
-    background-position:center;
-    box-shadow:0 20px 44px rgba(0,0,0,0.4);
-    transform-origin:center bottom;
-    transition:transform .95s cubic-bezier(.6,0,.3,1), opacity .95s ease;
-  }
-  .thumb:nth-child(3){ opacity:0.85; }
-  .thumb:nth-child(4){ opacity:0.6; }
 
-  .thumb.enter{ opacity:0; transform:translateX(30px); }
-  .thumb.dock{ transform:translate(-24px, 46px) scale(2.5); opacity:0; }
+    width:90px;
 
-  @media (max-width:760px){
-    .hero-content{ left:5%; right:52%; bottom:9%; }
-    .hero-strip{
-      right:4%;
-      bottom:9%;
-      width:min(44vw, 230px);
-      height:min(34vh, 230px);
-      gap:12px;
-    }
-    .thumb{ width:min(24vw, 100px); border-radius:20px; }
+    border-radius:18px;
   }
 
-  @media (prefers-reduced-motion:reduce){
-    .hero-bg, .hero-heading, .hero-sub, .thumb{ transition:none !important; }
-    .hero-progress::after{ animation:none !important; width:100%; }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion:reduce){
+
+  .hero-bg,
+  .hero-heading,
+  .hero-sub,
+  .thumb{
+
+    transition:none !important;
   }
+
+  .hero-progress::after{
+
+    animation:none !important;
+
+    width:100%;
+  }
+
+}
+
 </style>
 </head>
+
+
 <body>
 
-<section class="hero">
-  <div class="hero-bg" id="bgA"></div>
-  <div class="hero-bg" id="bgB"></div>
-  <div class="hero-scrim"></div>
 
-  <div class="hero-content">
-    <h1 class="hero-heading" id="heroHeading"></h1>
-    <p class="hero-sub" id="heroSub"></p>
-    <div class="hero-progress" id="heroProgress"></div>
+<section class="hero">
+
+  <!-- Background A -->
+  <div
+    class="hero-bg"
+    id="bgA">
   </div>
 
-  <div class="hero-strip" id="heroStrip"></div>
+
+  <!-- Background B -->
+  <div
+    class="hero-bg"
+    id="bgB">
+  </div>
+
+
+  <!-- Dark Gradient -->
+  <div class="hero-scrim"></div>
+
+
+  <!-- CENTERED CONTENT -->
+  <div class="hero-content">
+
+    <h1
+      class="hero-heading"
+      id="heroHeading">
+    </h1>
+
+    <p
+      class="hero-sub"
+      id="heroSub">
+    </p>
+
+    <div
+      class="hero-progress"
+      id="heroProgress">
+    </div>
+
+  </div>
+
+
+  <!-- IMAGE STRIP -->
+  <div
+    class="hero-strip"
+    id="heroStrip">
+  </div>
+
 </section>
 
+
+
 <script>
-  const slides = [
-    {
-      img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
-      heading: 'Where the ice remembers',
-      sub: 'Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
-      heading: 'Cliffs that outlast the wind',
-      sub: 'The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
-      heading: 'Granite against the sky',
-      sub: 'Torres del Paine, Patagonia — glacial towers standing over turquoise water.'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
-      heading: 'A quiet the size of a valley',
-      sub: 'Fiordland, New Zealand — rainforest and mist folded into ancient fjords.'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
-      heading: 'Fire under permanent frost',
-      sub: 'Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
-      heading: 'A desert carved from cold',
-      sub: 'Ladakh, India — high mountain passes and monasteries above the clouds.'
-    }
-  ];
 
-  const VISIBLE = 4;
-  const strip = document.getElementById('heroStrip');
-  const heading = document.getElementById('heroHeading');
-  const sub = document.getElementById('heroSub');
-  const bgs = [document.getElementById('bgA'), document.getElementById('bgB')];
 
-  let current = 0;
-  let activeBg = 0;
+/* =========================
+   SLIDES
+========================= */
 
-  function imgFor(i){ return slides[((i % slides.length) + slides.length) % slides.length].img; }
+const slides = [
 
-  function setText(i){
-    heading.textContent = slides[i].heading;
-    sub.textContent = slides[i].sub;
+  {
+    img:
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'Where the ice remembers',
+
+    sub:
+      'Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.'
+  },
+
+
+  {
+    img:
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'Cliffs that outlast the wind',
+
+    sub:
+      'The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.'
+  },
+
+
+  {
+    img:
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'Granite against the sky',
+
+    sub:
+      'Torres del Paine, Patagonia — glacial towers standing over turquoise water.'
+  },
+
+
+  {
+    img:
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'A quiet the size of a valley',
+
+    sub:
+      'Fiordland, New Zealand — rainforest and mist folded into ancient fjords.'
+  },
+
+
+  {
+    img:
+      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'Fire under permanent frost',
+
+    sub:
+      'Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.'
+  },
+
+
+  {
+    img:
+      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
+
+    heading:
+      'A desert carved from cold',
+
+    sub:
+      'Ladakh, India — high mountain passes and monasteries above the clouds.'
   }
 
-  function fadeText(i){
-    heading.style.opacity = 0;
-    sub.style.opacity = 0;
-    setTimeout(() => {
-      setText(i);
-      heading.style.opacity = 1;
-      sub.style.opacity = 1;
-    }, 320);
+];
+
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+const VISIBLE = 4;
+
+const strip =
+  document.getElementById('heroStrip');
+
+const heading =
+  document.getElementById('heroHeading');
+
+const sub =
+  document.getElementById('heroSub');
+
+const bgs = [
+
+  document.getElementById('bgA'),
+
+  document.getElementById('bgB')
+
+];
+
+
+let current = 0;
+
+let activeBg = 0;
+
+
+
+/* =========================
+   IMAGE HELPER
+========================= */
+
+function imgFor(i){
+
+  return slides[
+    (
+      i % slides.length
+      + slides.length
+    )
+    %
+    slides.length
+  ].img;
+
+}
+
+
+
+/* =========================
+   SET TEXT
+========================= */
+
+function setText(i){
+
+  heading.textContent =
+    slides[i].heading;
+
+  sub.textContent =
+    slides[i].sub;
+
+}
+
+
+
+/* =========================
+   TEXT FADE
+========================= */
+
+function fadeText(i){
+
+  heading.style.opacity = 0;
+
+  sub.style.opacity = 0;
+
+
+  heading.style.transform =
+    'translateY(12px)';
+
+  sub.style.transform =
+    'translateY(12px)';
+
+
+  setTimeout(() => {
+
+    setText(i);
+
+    heading.style.opacity = 1;
+
+    sub.style.opacity = 1;
+
+    heading.style.transform =
+      'translateY(0)';
+
+    sub.style.transform =
+      'translateY(0)';
+
+  },320);
+
+}
+
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+function init(){
+
+  /* First background */
+
+  bgs[0].style.backgroundImage =
+    `url(${slides[0].img})`;
+
+  bgs[0].style.transform =
+    'scale(1.08) translateY(-2%)';
+
+
+  /* Text */
+
+  setText(0);
+
+
+  /* Thumbnails */
+
+  for(
+    let k = 1;
+    k <= VISIBLE;
+    k++
+  ){
+
+    const t =
+      document.createElement('div');
+
+    t.className =
+      'thumb';
+
+    t.style.backgroundImage =
+      `url(${imgFor(k)})`;
+
+    strip.appendChild(t);
+
   }
 
-  function init(){
-    bgs[0].style.backgroundImage = `url(${slides[0].img})`;
-    setText(0);
-    for(let k = 1; k <= VISIBLE; k++){
-      const t = document.createElement('div');
-      t.className = 'thumb';
-      t.style.backgroundImage = `url(${imgFor(k)})`;
-      strip.appendChild(t);
-    }
-  }
+}
 
-  function tick(){
-    const nextIndex = (current + 1) % slides.length;
 
-    const showing = bgs[activeBg];
-    const hidden = bgs[1 - activeBg];
-    hidden.style.backgroundImage = `url(${slides[nextIndex].img})`;
+
+/* =========================
+   SLIDE TICK
+========================= */
+
+function tick(){
+
+  const nextIndex =
+    (current + 1)
+    %
+    slides.length;
+
+
+  /* -------------------------
+     BACKGROUND
+  ------------------------- */
+
+  const showing =
+    bgs[activeBg];
+
+  const hidden =
+    bgs[1 - activeBg];
+
+
+  hidden.style.backgroundImage =
+    `url(${slides[nextIndex].img})`;
+
+
+  /* Start from slightly above */
+
+  hidden.style.transform =
+    'scale(1.10) translateY(-3%)';
+
+  hidden.style.opacity = 0;
+
+
+  /*
+    Force browser to register
+    starting position
+  */
+
+  hidden.offsetHeight;
+
+
+  /* Fade + move DOWN */
+
+  requestAnimationFrame(() => {
+
     hidden.style.opacity = 1;
-    showing.style.opacity = 0;
-    activeBg = 1 - activeBg;
 
-    fadeText(nextIndex);
+    hidden.style.transform =
+      'scale(1) translateY(2%)';
 
-    const first = strip.firstElementChild;
-    if(first){
-      first.classList.add('dock');
-      setTimeout(() => {
-        first.remove();
-        const newIndex = current + 1 + VISIBLE;
-        const t = document.createElement('div');
-        t.className = 'thumb enter';
-        t.style.backgroundImage = `url(${imgFor(newIndex)})`;
-        strip.appendChild(t);
-        requestAnimationFrame(() => requestAnimationFrame(() => t.classList.remove('enter')));
-      }, 900);
-    }
+  });
 
-    current = nextIndex;
+
+  /* Hide old background */
+
+  showing.style.opacity = 0;
+
+
+  activeBg =
+    1 - activeBg;
+
+
+
+  /* -------------------------
+     TEXT
+  ------------------------- */
+
+  fadeText(nextIndex);
+
+
+
+  /* -------------------------
+     THUMBNAIL
+  ------------------------- */
+
+  const first =
+    strip.firstElementChild;
+
+
+  if(first){
+
+    /*
+      First image moves
+      DOWN + zooms
+    */
+
+    first.classList.add('dock');
+
+
+    setTimeout(() => {
+
+      first.remove();
+
+
+      const newIndex =
+        current
+        +
+        1
+        +
+        VISIBLE;
+
+
+      const t =
+        document.createElement('div');
+
+      t.className =
+        'thumb enter';
+
+
+      t.style.backgroundImage =
+        `url(${imgFor(newIndex)})`;
+
+
+      strip.appendChild(t);
+
+
+      /*
+        Animate new image
+        from DOWN position
+      */
+
+      requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+          t.classList.remove('enter');
+
+        });
+
+      });
+
+    },900);
+
   }
 
-  init();
-  setInterval(tick, 5000);
+
+  /* Update */
+
+  current =
+    nextIndex;
+
+}
+
+
+
+/* =========================
+   START
+========================= */
+
+init();
+
+
+/*
+  Change slide every 5 seconds
+*/
+
+setInterval(
+  tick,
+  5000
+);
+
+
 </script>
 
 </body>
