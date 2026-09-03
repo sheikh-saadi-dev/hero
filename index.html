@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
   --ink:#14201E;
   --cream:#F1EAD9;
@@ -26,45 +27,45 @@
 html,
 body{
   margin:0;
-  padding:0;
   width:100%;
   height:100%;
-  background:var(--ink);
 }
 
 body{
-  font-family:'Work Sans',sans-serif;
   overflow:hidden;
+  background:var(--ink);
+  font-family:"Work Sans",sans-serif;
 }
 
 
-/* =========================
+/* =================================
    HERO
-========================= */
+================================= */
 
 .hero{
   position:relative;
+
   width:100%;
   height:100vh;
   height:100dvh;
+
   min-height:560px;
 
   overflow:hidden;
 
   background:var(--ink);
+
   color:var(--cream);
 }
 
 
-/* =========================
+/* =================================
    BACKGROUND
-========================= */
+================================= */
 
-.hero-bg{
+.background{
   position:absolute;
   inset:-5%;
-
-  z-index:1;
 
   background-size:cover;
   background-position:center bottom;
@@ -72,24 +73,31 @@ body{
 
   opacity:0;
 
-  transform:scale(1.1) translateY(-3%);
+  transform:
+    scale(1.1)
+    translateY(-3%);
 
   transition:
-    opacity 1.15s ease,
+    opacity 1s ease,
     transform 5s cubic-bezier(.22,.61,.36,1);
+
+  z-index:1;
 }
 
-.hero-bg.active{
+.background.active{
   opacity:1;
-  transform:scale(1) translateY(2%);
+
+  transform:
+    scale(1)
+    translateY(2%);
 }
 
 
-/* =========================
-   OVERLAY
-========================= */
+/* =================================
+   DARK OVERLAY
+================================= */
 
-.hero-overlay{
+.overlay{
   position:absolute;
   inset:0;
 
@@ -98,27 +106,27 @@ body{
   background:
     linear-gradient(
       100deg,
-      rgba(20,32,30,.95) 0%,
-      rgba(20,32,30,.76) 30%,
-      rgba(20,32,30,.32) 60%,
-      rgba(20,32,30,.04) 85%
+      rgba(20,32,30,.96) 0%,
+      rgba(20,32,30,.78) 30%,
+      rgba(20,32,30,.35) 62%,
+      rgba(20,32,30,.05) 90%
     );
 }
 
 
-/* =========================
+/* =================================
    CONTENT
-========================= */
+================================= */
 
-.hero-content{
+.content{
   position:absolute;
 
   left:6%;
   top:50%;
 
-  transform:translateY(-50%);
+  width:min(500px,43vw);
 
-  width:min(520px,43vw);
+  transform:translateY(-50%);
 
   z-index:5;
 }
@@ -128,71 +136,89 @@ body{
   align-items:center;
   gap:12px;
 
-  margin-bottom:22px;
-
-  font-size:10px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
+  margin-bottom:20px;
 
   color:var(--gold);
+
+  font-size:10px;
+
+  letter-spacing:.2em;
+
+  text-transform:uppercase;
 }
 
 .kicker::before{
   content:"";
 
-  width:34px;
+  width:32px;
   height:1px;
 
   background:var(--gold);
 }
 
-.hero-heading{
+.title{
   margin:0 0 18px;
 
-  font-family:'Fraunces',serif;
+  font-family:"Fraunces",serif;
+
   font-style:italic;
+
   font-weight:500;
 
-  font-size:clamp(2rem,4.5vw,4.4rem);
+  font-size:
+    clamp(
+      2rem,
+      4.5vw,
+      4.4rem
+    );
 
   line-height:1.04;
 
-  letter-spacing:-.025em;
+  letter-spacing:-.03em;
 
   transition:
-    opacity .45s ease,
-    transform .55s ease;
+    opacity .35s ease,
+    transform .4s ease;
 }
 
-.hero-sub{
+.description{
+  margin:0 0 24px;
+
   max-width:500px;
-
-  margin:0 0 26px;
-
-  font-size:clamp(.82rem,1.3vw,1rem);
-
-  line-height:1.75;
 
   color:var(--muted);
 
+  font-size:
+    clamp(
+      .8rem,
+      1.3vw,
+      1rem
+    );
+
+  line-height:1.7;
+
   transition:
-    opacity .45s ease,
-    transform .55s ease;
+    opacity .35s ease,
+    transform .4s ease;
 }
 
-.location{
+.place{
   display:flex;
+
   align-items:center;
+
   gap:8px;
 
-  font-size:10px;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-
   color:rgba(241,234,217,.5);
+
+  font-size:10px;
+
+  letter-spacing:.15em;
+
+  text-transform:uppercase;
 }
 
-.location-dot{
+.place-dot{
   width:5px;
   height:5px;
 
@@ -202,70 +228,87 @@ body{
 }
 
 
-/* =========================
-   CONTENT ANIMATION
-========================= */
+/* =================================
+   TEXT ANIMATION
+================================= */
 
-.content-changing .hero-heading,
-.content-changing .hero-sub,
-.content-changing .location{
+.content.hide .title,
+.content.hide .description,
+.content.hide .place{
   opacity:0;
-  transform:translateY(14px);
+
+  transform:translateY(12px);
 }
 
 
-/* =========================
-   HORIZONTAL SLIDER
-========================= */
+/* =================================
+   HORIZONTAL SLIDER WRAPPER
+================================= */
 
-.gallery{
+.slider-wrap{
   position:absolute;
 
-  left:50%;
-  bottom:8%;
+  left:6%;
+  right:0;
 
-  transform:translateX(-50%);
+  bottom:7%;
 
   z-index:6;
 
-  width:88%;
-  height:230px;
+  overflow:hidden;
 
-  display:flex;
-  align-items:flex-end;
-
-  gap:18px;
-
-  overflow-x:auto;
-  overflow-y:hidden;
-
-  padding:20px 0;
-
-  scrollbar-width:none;
-
-  cursor:grab;
-
-  /* IMPORTANT:
-     No background color
-  */
+  /* NO BACKGROUND */
 
   background:transparent;
 }
 
-.gallery::-webkit-scrollbar{
+
+/* =================================
+   SLIDER
+================================= */
+
+.slider{
+  display:flex;
+
+  align-items:flex-end;
+
+  gap:16px;
+
+  width:100%;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:20px 0 20px;
+
+  scrollbar-width:none;
+
+  scroll-behavior:smooth;
+
+  cursor:grab;
+
+  /* NO BACKGROUND */
+  background:transparent;
+
+  user-select:none;
+}
+
+.slider::-webkit-scrollbar{
   display:none;
 }
 
-.gallery.dragging{
+.slider.dragging{
   cursor:grabbing;
+
+  scroll-behavior:auto;
 }
 
 
-/* =========================
+/* =================================
    CARD
-========================= */
+================================= */
 
-.gallery-item{
+.card{
   position:relative;
 
   flex:0 0 150px;
@@ -277,45 +320,49 @@ body{
 
   border-radius:24px;
 
-  background:transparent;
+  border:1px solid rgba(241,234,217,.15);
 
-  border:1px solid rgba(241,234,217,.18);
+  opacity:.45;
 
-  opacity:.52;
-
-  transform:scale(.88);
+  transform:scale(.86);
 
   transition:
-    transform .7s cubic-bezier(.22,.61,.36,1),
-    opacity .5s ease,
-    border-color .5s ease,
-    box-shadow .5s ease;
+    opacity .45s ease,
+    transform .5s cubic-bezier(.22,.61,.36,1),
+    border-color .45s ease,
+    box-shadow .45s ease;
 
   cursor:pointer;
 }
 
-.gallery-item:hover{
-  opacity:.82;
-  transform:scale(.93);
-}
-
-.gallery-item.active{
+.card.active{
   opacity:1;
 
   transform:scale(1);
 
-  border-color:rgba(201,151,62,.85);
+  border-color:
+    rgba(201,151,62,.9);
 
   box-shadow:
-    0 25px 60px rgba(0,0,0,.42);
+    0 22px 55px rgba(0,0,0,.5);
+}
+
+.card:hover{
+  opacity:.85;
+
+  transform:scale(.93);
+}
+
+.card.active:hover{
+  transform:scale(1.02);
 }
 
 
-/* =========================
+/* =================================
    CARD IMAGE
-========================= */
+================================= */
 
-.gallery-item img{
+.card img{
   display:block;
 
   width:100%;
@@ -323,80 +370,86 @@ body{
 
   object-fit:cover;
 
+  pointer-events:none;
+
   transition:
-    transform .9s cubic-bezier(.22,.61,.36,1);
+    transform .8s ease;
 }
 
-.gallery-item:hover img{
+.card:hover img{
   transform:scale(1.06);
 }
 
 
-/* =========================
-   IMAGE GRADIENT
-========================= */
+/* =================================
+   CARD GRADIENT
+================================= */
 
-.gallery-item::after{
+.card::after{
   content:"";
 
   position:absolute;
   inset:0;
 
+  pointer-events:none;
+
   background:
     linear-gradient(
       to top,
-      rgba(20,32,30,.7),
-      transparent 55%
+      rgba(20,32,30,.72),
+      transparent 60%
     );
-
-  pointer-events:none;
 }
 
 
-/* =========================
+/* =================================
    NUMBER
-========================= */
+================================= */
 
 .number{
   position:absolute;
 
-  left:16px;
-  bottom:14px;
+  left:15px;
+  bottom:13px;
 
   z-index:2;
 
   font-size:9px;
+
   letter-spacing:.2em;
 
-  color:rgba(241,234,217,.72);
+  color:rgba(241,234,217,.65);
 }
 
-.gallery-item.active .number{
+.card.active .number{
   color:var(--gold);
 }
 
 
-/* =========================
+/* =================================
    PROGRESS
-========================= */
+================================= */
 
 .progress{
   position:absolute;
 
   left:6%;
-  bottom:7%;
+  bottom:4%;
 
   z-index:7;
 
   width:120px;
   height:2px;
 
-  background:rgba(241,234,217,.18);
-
   overflow:hidden;
+
+  background:
+    rgba(241,234,217,.2);
 }
 
-.progress-bar{
+.progress span{
+  display:block;
+
   width:0;
   height:100%;
 
@@ -404,115 +457,58 @@ body{
 }
 
 
-/* =========================
-   SCROLL HINT
-========================= */
-
-.scroll-hint{
-  position:absolute;
-
-  right:6%;
-  bottom:7%;
-
-  z-index:7;
-
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  font-size:9px;
-  letter-spacing:.17em;
-  text-transform:uppercase;
-
-  color:rgba(241,234,217,.42);
-}
-
-.scroll-hint::before{
-  content:"← →";
-
-  color:var(--gold);
-
-  font-size:13px;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media(max-width:900px){
-
-  .hero-content{
-    left:5%;
-    width:45vw;
-  }
-
-  .gallery{
-    width:90%;
-  }
-
-  .gallery-item{
-    flex-basis:135px;
-    width:135px;
-    height:175px;
-  }
-}
-
-
-/* =========================
+/* =================================
    MOBILE
-========================= */
+================================= */
 
 @media(max-width:700px){
 
-  .hero-overlay{
+  .overlay{
     background:
       linear-gradient(
         100deg,
-        rgba(20,32,30,.95) 0%,
-        rgba(20,32,30,.68) 55%,
-        rgba(20,32,30,.15) 100%
+        rgba(20,32,30,.96),
+        rgba(20,32,30,.65)
       );
   }
 
-  .hero-content{
+  .content{
     left:6%;
+    top:39%;
 
-    top:42%;
-
-    width:46vw;
+    width:43vw;
   }
 
-  .hero-heading{
-    font-size:clamp(1.6rem,6vw,2.5rem);
+  .title{
+    font-size:1.6rem;
   }
 
-  .hero-sub{
-    font-size:.72rem;
+  .description{
+    font-size:.7rem;
+
     line-height:1.55;
   }
 
   .kicker{
     font-size:8px;
-    margin-bottom:15px;
+
+    margin-bottom:14px;
   }
 
-  .gallery{
+  .slider-wrap{
     left:5%;
-    bottom:7%;
+    right:0;
 
-    transform:none;
+    bottom:5%;
+  }
 
-    width:90%;
-
-    height:185px;
-
+  .slider{
     gap:12px;
 
-    padding:10px 0;
+    padding-right:20px;
   }
 
-  .gallery-item{
+  .card{
     flex-basis:105px;
 
     width:105px;
@@ -524,43 +520,12 @@ body{
   .progress{
     display:none;
   }
-
-  .scroll-hint{
-    display:none;
-  }
 }
 
 
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media(max-width:480px){
-
-  .hero-content{
-    top:40%;
-    width:44vw;
-  }
-
-  .hero-heading{
-    font-size:1.5rem;
-  }
-
-  .hero-sub{
-    font-size:.68rem;
-  }
-
-  .gallery-item{
-    flex-basis:95px;
-    width:95px;
-    height:140px;
-  }
-}
-
-
-/* =========================
+/* =================================
    REDUCED MOTION
-========================= */
+================================= */
 
 @media(prefers-reduced-motion:reduce){
 
@@ -568,9 +533,11 @@ body{
   *::before,
   *::after{
     transition:none!important;
-    animation:none!important;
+    scroll-behavior:auto!important;
   }
+
 }
+
 </style>
 </head>
 
@@ -579,33 +546,55 @@ body{
 
 <section class="hero">
 
-  <div class="hero-bg active" id="bgA"></div>
-  <div class="hero-bg" id="bgB"></div>
 
-  <div class="hero-overlay"></div>
+  <!-- BACKGROUNDS -->
+
+  <div
+    class="background active"
+    id="backgroundA">
+  </div>
+
+  <div
+    class="background"
+    id="backgroundB">
+  </div>
 
 
-  <!-- HERO CONTENT -->
+  <!-- OVERLAY -->
 
-  <div class="hero-content" id="heroContent">
+  <div class="overlay"></div>
+
+
+  <!-- CONTENT -->
+
+  <div
+    class="content"
+    id="content">
 
     <div class="kicker">
       Northbound Expeditions
     </div>
 
-    <h1 class="hero-heading" id="heroHeading">
+    <h1
+      class="title"
+      id="title">
       Where the ice remembers
     </h1>
 
-    <p class="hero-sub" id="heroSub">
+    <p
+      class="description"
+      id="description">
       Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.
     </p>
 
-    <div class="location">
-      <span class="location-dot"></span>
-      <span id="heroLocation">
+    <div class="place">
+
+      <span class="place-dot"></span>
+
+      <span id="place">
         Svalbard, Norway
       </span>
+
     </div>
 
   </div>
@@ -613,24 +602,24 @@ body{
 
   <!-- HORIZONTAL IMAGE SLIDER -->
 
-  <div class="gallery" id="gallery"></div>
+  <div class="slider-wrap">
+
+    <div
+      class="slider"
+      id="slider">
+    </div>
+
+  </div>
 
 
   <!-- PROGRESS -->
 
   <div class="progress">
-    <div
-      class="progress-bar"
-      id="progressBar">
-    </div>
+
+    <span id="progress"></span>
+
   </div>
 
-
-  <!-- HINT -->
-
-  <div class="scroll-hint">
-    Drag to explore
-  </div>
 
 </section>
 
@@ -638,51 +627,93 @@ body{
 <script>
 
 /* =========================================
-   SLIDE DATA
+   DATA
 ========================================= */
 
 const slides = [
 
   {
-    img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
-    heading:"Where the ice remembers",
-    sub:"Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
-    location:"Svalbard, Norway"
+    image:
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "Where the ice remembers",
+
+    description:
+    "Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
+
+    place:
+    "Svalbard, Norway"
   },
 
   {
-    img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
-    heading:"Cliffs that outlast the wind",
-    sub:"The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
-    location:"Faroe Islands"
+    image:
+    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "Cliffs that outlast the wind",
+
+    description:
+    "The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
+
+    place:
+    "Faroe Islands"
   },
 
   {
-    img:"https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
-    heading:"Granite against the sky",
-    sub:"Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
-    location:"Patagonia, Chile"
+    image:
+    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "Granite against the sky",
+
+    description:
+    "Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
+
+    place:
+    "Patagonia, Chile"
   },
 
   {
-    img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
-    heading:"A quiet the size of a valley",
-    sub:"Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
-    location:"Fiordland, New Zealand"
+    image:
+    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "A quiet the size of a valley",
+
+    description:
+    "Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
+
+    place:
+    "Fiordland, New Zealand"
   },
 
   {
-    img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
-    heading:"Fire under permanent frost",
-    sub:"Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
-    location:"Kamchatka, Russia"
+    image:
+    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "Fire under permanent frost",
+
+    description:
+    "Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
+
+    place:
+    "Kamchatka, Russia"
   },
 
   {
-    img:"https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
-    heading:"A desert carved from cold",
-    sub:"Ladakh, India — high mountain passes and monasteries above the clouds.",
-    location:"Ladakh, India"
+    image:
+    "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
+
+    title:
+    "A desert carved from cold",
+
+    description:
+    "Ladakh, India — high mountain passes and monasteries above the clouds.",
+
+    place:
+    "Ladakh, India"
   }
 
 ];
@@ -692,29 +723,29 @@ const slides = [
    ELEMENTS
 ========================================= */
 
-const gallery =
-  document.getElementById("gallery");
+const slider =
+  document.getElementById("slider");
 
-const heading =
-  document.getElementById("heroHeading");
+const title =
+  document.getElementById("title");
 
-const sub =
-  document.getElementById("heroSub");
+const description =
+  document.getElementById("description");
 
-const location =
-  document.getElementById("heroLocation");
+const place =
+  document.getElementById("place");
 
 const content =
-  document.getElementById("heroContent");
+  document.getElementById("content");
 
-const progressBar =
-  document.getElementById("progressBar");
+const progress =
+  document.getElementById("progress");
 
 const backgrounds = [
 
-  document.getElementById("bgA"),
+  document.getElementById("backgroundA"),
 
-  document.getElementById("bgB")
+  document.getElementById("backgroundB")
 
 ];
 
@@ -727,29 +758,27 @@ let current = 0;
 
 let activeBackground = 0;
 
-let autoplay;
+let autoplay = null;
 
-let progressAnimation;
+let progressFrame = null;
 
 const AUTO_TIME = 5000;
 
 
 /* =========================================
-   CREATE SLIDER
+   BUILD CARDS
 ========================================= */
 
-function createSlider(){
+function buildCards(){
 
   slides.forEach((slide,index)=>{
 
     const card =
       document.createElement("div");
 
-    card.className =
-      "gallery-item";
+    card.className = "card";
 
-    card.dataset.index =
-      index;
+    card.dataset.index = index;
 
     if(index === 0){
 
@@ -757,16 +786,17 @@ function createSlider(){
 
     }
 
+
     card.innerHTML = `
 
       <img
-        src="${slide.img}"
-        alt="${slide.heading}"
+        src="${slide.image}"
+        alt="${slide.title}"
         draggable="false"
       >
 
       <span class="number">
-        ${String(index + 1).padStart(2,"0")}
+        ${String(index+1).padStart(2,"0")}
       </span>
 
     `;
@@ -774,15 +804,15 @@ function createSlider(){
 
     card.addEventListener(
       "click",
-      ()=>{
+      function(){
 
-        selectSlide(index,true);
+        activate(index);
 
       }
     );
 
 
-    gallery.appendChild(card);
+    slider.appendChild(card);
 
   });
 
@@ -790,20 +820,82 @@ function createSlider(){
 
 
 /* =========================================
-   BACKGROUND CHANGE
+   MOVE CARD TO LEFT
 ========================================= */
 
-function changeBackground(index){
+function moveCardToLeft(index){
+
+  const card =
+    slider.querySelector(
+      `.card[data-index="${index}"]`
+    );
+
+  if(!card){
+    return;
+  }
+
+
+  /*
+    This is the important part.
+
+    Selected card becomes the
+    LEFTMOST card.
+  */
+
+  slider.scrollTo({
+
+    left:
+      card.offsetLeft -
+      slider.offsetLeft,
+
+    behavior:"smooth"
+
+  });
+
+}
+
+
+/* =========================================
+   UPDATE ACTIVE CARD
+========================================= */
+
+function updateCards(index){
+
+  const cards =
+    slider.querySelectorAll(".card");
+
+
+  cards.forEach(card=>{
+
+    card.classList.toggle(
+      "active",
+      Number(card.dataset.index) === index
+    );
+
+  });
+
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+function updateBackground(index){
 
   const next =
-    backgrounds[1-activeBackground];
+    backgrounds[
+      1-activeBackground
+    ];
 
   const old =
-    backgrounds[activeBackground];
+    backgrounds[
+      activeBackground
+    ];
 
 
   next.style.backgroundImage =
-    `url("${slides[index].img}")`;
+    `url("${slides[index].image}")`;
 
 
   next.classList.remove("active");
@@ -836,113 +928,65 @@ function changeBackground(index){
 
   activeBackground =
     1-activeBackground;
+
 }
 
 
 /* =========================================
-   TEXT CHANGE
+   TEXT
 ========================================= */
 
-function changeText(index){
+function updateText(index){
 
-  content.classList.add(
-    "content-changing"
-  );
+  content.classList.add("hide");
 
 
   setTimeout(()=>{
 
-    heading.textContent =
-      slides[index].heading;
+    title.textContent =
+      slides[index].title;
 
-    sub.textContent =
-      slides[index].sub;
+    description.textContent =
+      slides[index].description;
 
-    location.textContent =
-      slides[index].location;
+    place.textContent =
+      slides[index].place;
 
 
-    content.classList.remove(
-      "content-changing"
-    );
+    content.classList.remove("hide");
 
   },280);
+
 }
 
 
 /* =========================================
-   ACTIVE CARD
+   ACTIVATE SLIDE
 ========================================= */
 
-function updateActiveCard(index){
+function activate(index){
 
-  const cards =
-    gallery.querySelectorAll(
-      ".gallery-item"
-    );
+  if(index === current){
 
+    moveCardToLeft(index);
 
-  cards.forEach((card,i)=>{
-
-    card.classList.toggle(
-      "active",
-      i === index
-    );
-
-  });
-
-
-  const activeCard =
-    cards[index];
-
-
-  /*
-    MOST IMPORTANT PART:
-
-    Active image always moves
-    to the LEFT edge.
-  */
-
-  if(activeCard){
-
-    const leftPosition =
-      activeCard.offsetLeft -
-      gallery.offsetLeft;
-
-
-    gallery.scrollTo({
-
-      left:leftPosition,
-
-      behavior:"smooth"
-
-    });
+    return;
 
   }
 
-}
-
-
-/* =========================================
-   SELECT SLIDE
-========================================= */
-
-function selectSlide(index,manual=false){
 
   current = index;
 
-  changeBackground(index);
 
-  changeText(index);
+  updateCards(index);
 
-  updateActiveCard(index);
+  moveCardToLeft(index);
 
+  updateBackground(index);
 
-  if(manual){
+  updateText(index);
 
-    resetAutoplay();
-
-  }
+  resetAutoplay();
 
 }
 
@@ -951,12 +995,20 @@ function selectSlide(index,manual=false){
    NEXT
 ========================================= */
 
-function nextSlide(){
+function next(){
 
-  const next =
-    (current+1)%slides.length;
+  let nextIndex =
+    current + 1;
 
-  selectSlide(next);
+
+  if(nextIndex >= slides.length){
+
+    nextIndex = 0;
+
+  }
+
+
+  activate(nextIndex);
 
 }
 
@@ -965,13 +1017,21 @@ function nextSlide(){
    PREVIOUS
 ========================================= */
 
-function previousSlide(){
+function previous(){
 
-  const previous =
-    (current-1+slides.length)
-    %slides.length;
+  let previousIndex =
+    current - 1;
 
-  selectSlide(previous);
+
+  if(previousIndex < 0){
+
+    previousIndex =
+      slides.length - 1;
+
+  }
+
+
+  activate(previousIndex);
 
 }
 
@@ -986,7 +1046,7 @@ function startAutoplay(){
 
   autoplay =
     setInterval(
-      nextSlide,
+      next,
       AUTO_TIME
     );
 
@@ -997,7 +1057,7 @@ function startAutoplay(){
 
 
 /* =========================================
-   RESET AUTOPLAY
+   RESET
 ========================================= */
 
 function resetAutoplay(){
@@ -1005,10 +1065,10 @@ function resetAutoplay(){
   clearInterval(autoplay);
 
   cancelAnimationFrame(
-    progressAnimation
+    progressFrame
   );
 
-  progressBar.style.width =
+  progress.style.width =
     "0%";
 
   startAutoplay();
@@ -1026,10 +1086,10 @@ function startProgress(){
     performance.now();
 
 
-  function animate(time){
+  function animate(now){
 
     const elapsed =
-      time-start;
+      now-start;
 
 
     const percent =
@@ -1039,13 +1099,13 @@ function startProgress(){
       );
 
 
-    progressBar.style.width =
+    progress.style.width =
       percent+"%";
 
 
-    if(percent<100){
+    if(percent < 100){
 
-      progressAnimation =
+      progressFrame =
         requestAnimationFrame(
           animate
         );
@@ -1055,7 +1115,7 @@ function startProgress(){
   }
 
 
-  progressAnimation =
+  progressFrame =
     requestAnimationFrame(
       animate
     );
@@ -1065,40 +1125,25 @@ function startProgress(){
 
 /* =========================================
    MOUSE WHEEL
-   Vertical wheel becomes
-   horizontal slider
 ========================================= */
 
-gallery.addEventListener(
+slider.addEventListener(
   "wheel",
-  event=>{
+  function(event){
 
     event.preventDefault();
 
 
-    if(
-      Math.abs(event.deltaY) < 5 &&
-      Math.abs(event.deltaX) < 5
-    ){
-      return;
-    }
+    if(event.deltaY > 0){
 
-
-    if(
-      event.deltaY > 0 ||
-      event.deltaX > 0
-    ){
-
-      nextSlide();
-
-    }else{
-
-      previousSlide();
+      next();
 
     }
+    else{
 
+      previous();
 
-    resetAutoplay();
+    }
 
   },
   {
@@ -1111,30 +1156,30 @@ gallery.addEventListener(
    DRAG
 ========================================= */
 
-let dragging = false;
+let isDragging = false;
 
-let startX = 0;
+let dragStartX = 0;
 
-let startScroll = 0;
+let dragScroll = 0;
 
 
-gallery.addEventListener(
+slider.addEventListener(
   "pointerdown",
-  event=>{
+  function(event){
 
-    dragging = true;
+    isDragging = true;
 
-    gallery.classList.add(
+    dragStartX =
+      event.clientX;
+
+    dragScroll =
+      slider.scrollLeft;
+
+    slider.classList.add(
       "dragging"
     );
 
-    startX =
-      event.clientX;
-
-    startScroll =
-      gallery.scrollLeft;
-
-    gallery.setPointerCapture(
+    slider.setPointerCapture(
       event.pointerId
     );
 
@@ -1142,101 +1187,97 @@ gallery.addEventListener(
 );
 
 
-gallery.addEventListener(
+slider.addEventListener(
   "pointermove",
-  event=>{
+  function(event){
 
-    if(!dragging){
+    if(!isDragging){
       return;
     }
 
 
     const distance =
-      event.clientX-startX;
+      event.clientX -
+      dragStartX;
 
 
-    gallery.scrollLeft =
-      startScroll-distance;
+    slider.scrollLeft =
+      dragScroll-distance;
 
   }
 );
 
 
-gallery.addEventListener(
+slider.addEventListener(
   "pointerup",
-  event=>{
+  function(){
 
-    dragging = false;
+    if(!isDragging){
+      return;
+    }
 
-    gallery.classList.remove(
+
+    isDragging = false;
+
+    slider.classList.remove(
       "dragging"
     );
 
-    snapToNearest();
 
-    resetAutoplay();
+    /*
+      After dragging,
+      find the card closest
+      to the LEFT edge.
+    */
+
+    const cards =
+      [...slider.querySelectorAll(
+        ".card"
+      )];
+
+
+    let nearest = 0;
+
+    let distance =
+      Infinity;
+
+
+    cards.forEach((card,index)=>{
+
+      const d =
+        Math.abs(
+          card.offsetLeft -
+          slider.scrollLeft
+        );
+
+
+      if(d < distance){
+
+        distance = d;
+
+        nearest = index;
+
+      }
+
+    });
+
+
+    activate(nearest);
 
   }
 );
 
 
 /* =========================================
-   SNAP TO NEAREST CARD
-========================================= */
-
-function snapToNearest(){
-
-  const cards =
-    [...gallery.querySelectorAll(
-      ".gallery-item"
-    )];
-
-
-  let nearestIndex = 0;
-
-  let nearestDistance =
-    Infinity;
-
-
-  cards.forEach((card,index)=>{
-
-    const distance =
-      Math.abs(
-        card.offsetLeft -
-        gallery.scrollLeft
-      );
-
-
-    if(distance<nearestDistance){
-
-      nearestDistance =
-        distance;
-
-      nearestIndex =
-        index;
-
-    }
-
-  });
-
-
-  selectSlide(
-    nearestIndex
-  );
-
-}
-
-
-/* =========================================
-   TOUCH SWIPE
+   TOUCH
 ========================================= */
 
 let touchStartX = 0;
 
 
-gallery.addEventListener(
+slider.addEventListener(
   "touchstart",
-  event=>{
+  function(event){
 
     touchStartX =
       event.touches[0].clientX;
@@ -1248,37 +1289,35 @@ gallery.addEventListener(
 );
 
 
-gallery.addEventListener(
+slider.addEventListener(
   "touchend",
-  event=>{
+  function(event){
 
-    const endX =
+    const touchEndX =
       event.changedTouches[0].clientX;
 
 
-    const difference =
-      touchStartX-endX;
+    const distance =
+      touchStartX-touchEndX;
 
 
-    if(Math.abs(difference)<40){
+    if(Math.abs(distance)<40){
 
       return;
 
     }
 
 
-    if(difference>0){
+    if(distance>0){
 
-      nextSlide();
-
-    }else{
-
-      previousSlide();
+      next();
 
     }
+    else{
 
+      previous();
 
-    resetAutoplay();
+    }
 
   },
   {
@@ -1293,52 +1332,20 @@ gallery.addEventListener(
 
 document.addEventListener(
   "keydown",
-  event=>{
+  function(event){
 
-    if(event.key==="ArrowRight"){
+    if(event.key === "ArrowRight"){
 
-      nextSlide();
-
-      resetAutoplay();
+      next();
 
     }
 
 
-    if(event.key==="ArrowLeft"){
+    if(event.key === "ArrowLeft"){
 
-      previousSlide();
-
-      resetAutoplay();
+      previous();
 
     }
-
-  }
-);
-
-
-/* =========================================
-   PAUSE ON HOVER
-========================================= */
-
-gallery.addEventListener(
-  "mouseenter",
-  ()=>{
-
-    clearInterval(autoplay);
-
-    cancelAnimationFrame(
-      progressAnimation
-    );
-
-  }
-);
-
-
-gallery.addEventListener(
-  "mouseleave",
-  ()=>{
-
-    startAutoplay();
 
   }
 );
@@ -1351,7 +1358,7 @@ gallery.addEventListener(
 function init(){
 
   backgrounds[0].style.backgroundImage =
-    `url("${slides[0].img}")`;
+    `url("${slides[0].image}")`;
 
   backgrounds[0].style.opacity =
     "1";
@@ -1360,9 +1367,9 @@ function init(){
     "scale(1) translateY(2%)";
 
 
-  createSlider();
+  buildCards();
 
-  updateActiveCard(0);
+  updateCards(0);
 
   startAutoplay();
 
