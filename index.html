@@ -23,11 +23,20 @@
     width:100%;
     height:100vh;
     height:100dvh;
-    min-height:560px;
-    max-height:960px;
+    min-height:420px;
     overflow:hidden;
     background:var(--ink);
     color:var(--parchment);
+  }
+
+  /* fixed-size design, scaled uniformly to fill any viewport so the
+     layout looks identical on mobile and desktop */
+  .hero-canvas{
+    position:absolute;
+    top:0; left:0;
+    width:1280px;
+    height:720px;
+    transform-origin:top left;
   }
 
   /* ---------- background ---------- */
@@ -58,15 +67,15 @@
   /* ---------- text ---------- */
   .hero-text{
     position:absolute;
-    left:6%;
+    left:80px;
     top:50%;
     transform:translateY(-50%);
-    width:min(40%, 520px);
+    width:480px;
     z-index:2;
   }
   .hero-location{
     font-family:'Work Sans', sans-serif;
-    font-size:0.78rem;
+    font-size:13px;
     font-weight:600;
     letter-spacing:0.28em;
     text-transform:uppercase;
@@ -78,13 +87,13 @@
     font-family:'Fraunces', serif;
     font-style:italic;
     font-weight:500;
-    font-size:clamp(1.9rem, 4vw, 3.4rem);
+    font-size:54px;
     line-height:1.08;
     margin:0 0 18px;
     transition:opacity .5s ease, transform .5s ease;
   }
   .hero-desc{
-    font-size:clamp(0.9rem, 1.5vw, 1.05rem);
+    font-size:17px;
     line-height:1.65;
     color:var(--stone);
     margin:0 0 26px;
@@ -94,7 +103,7 @@
     display:inline-flex;
     align-items:center;
     gap:8px;
-    font-size:0.9rem;
+    font-size:15px;
     font-weight:500;
     color:var(--parchment);
     text-decoration:none;
@@ -112,98 +121,96 @@
     transform:translateY(10px);
   }
 
-  /* ---------- slider ---------- */
-  .slider-wrap{
+  /* ---------- vertical card stack ---------- */
+  .stack-wrap{
     position:absolute;
-    left:40%;
-    right:0;
+    right:90px;
     top:50%;
     transform:translateY(-50%);
     z-index:2;
-    overflow:hidden;
   }
-  .slider{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    overflow-x:auto;
-    overflow-y:visible;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    touch-action:pan-x;
-    padding:14px 6%;
-    margin:0;
-    list-style:none;
-    scrollbar-width:none;
-    cursor:grab;
-  }
-  .slider::-webkit-scrollbar{ display:none; }
-  .slider:active{ cursor:grabbing; }
-  .slider:focus-visible{ outline:2px solid var(--gold); outline-offset:6px; }
-
-  .card{
+  .stack{
     position:relative;
-    flex-shrink:0;
-    width:clamp(110px, 12vw, 170px);
-    aspect-ratio:3 / 4;
-    border-radius:16px;
-    overflow:hidden;
-    scroll-snap-align:start;
-    opacity:0.5;
-    filter:saturate(0.85) brightness(0.8);
-    box-shadow:0 14px 30px rgba(0,0,0,0.3);
-    transition:opacity .5s ease, filter .5s ease, box-shadow .5s ease, transform .35s ease;
-    cursor:pointer;
   }
-  .card img{
+  .stack-card{
+    position:absolute;
+    top:0; left:0;
+    border-radius:18px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 18px 40px rgba(0,0,0,0.4);
+    transition:
+      top .75s cubic-bezier(.65,0,.35,1),
+      left .75s cubic-bezier(.65,0,.35,1),
+      width .75s cubic-bezier(.65,0,.35,1),
+      height .75s cubic-bezier(.65,0,.35,1),
+      opacity .6s ease,
+      filter .6s ease,
+      transform .3s ease;
+  }
+  .stack-card img{
     width:100%; height:100%;
     object-fit:cover;
     display:block;
     pointer-events:none;
   }
-  .card:hover{ transform:translateY(-5px); }
-  .card.is-active{
-    opacity:1;
-    filter:saturate(1) brightness(1.05);
-    box-shadow:0 0 0 2px rgba(201,151,62,0.85), 0 20px 42px rgba(0,0,0,0.4);
-    transform:scale(1.02);
+  .stack-card:hover{ transform:scale(1.03); }
+  .stack-card[data-slot="0"]{
+    box-shadow:0 0 0 2px rgba(201,151,62,0.85), 0 22px 46px rgba(0,0,0,0.45);
   }
+  .stack-card.entering{ opacity:0 !important; }
+  .stack-card.exiting{ opacity:0 !important; }
 
-  @media (max-width:900px){
-    .hero-text{ width:min(52%, 460px); }
-    .slider-wrap{ left:0; }
-    .slider{ padding:14px 5%; }
+  /* ---------- navbar ---------- */
+  .navbar{
+    position:absolute;
+    top:0; left:0; right:0;
+    z-index:5;
+    display:flex;
+    justify-content:center;
+    padding:26px 0;
+    background:transparent;
+    pointer-events:none;
   }
-
-  @media (max-width:600px){
-    .hero-text{ left:5%; width:88%; top:20%; transform:none; }
-    .slider-wrap{ left:5%; right:5%; top:auto; bottom:8%; transform:none; }
-    .card{ width:clamp(90px, 26vw, 120px); }
+  .navbar-brand{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:17px;
+    letter-spacing:0.05em;
+    color:var(--parchment);
+    background:transparent;
+    pointer-events:auto;
   }
 
   @media (prefers-reduced-motion:reduce){
     .hero-bg{ animation:none !important; transform:none !important; }
-    .card, .hero-location, .hero-title, .hero-desc, .hero-cta{ transition:none !important; }
-    .slider{ scroll-behavior:auto; }
+    .stack-card, .hero-location, .hero-title, .hero-desc, .hero-cta{ transition:none !important; }
   }
 </style>
 </head>
 <body>
 
 <section class="hero" aria-label="Destination showcase">
-  <div class="hero-bg" id="bgA" aria-hidden="true"></div>
-  <div class="hero-bg" id="bgB" aria-hidden="true"></div>
-  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-canvas" id="heroCanvas">
+    <nav class="navbar" aria-label="Primary">
+      <span class="navbar-brand">Northbound</span>
+    </nav>
 
-  <div class="hero-text" id="heroText">
-    <p class="hero-location" id="heroLocation"></p>
-    <h1 class="hero-title" id="heroTitle"></h1>
-    <p class="hero-desc" id="heroDesc"></p>
-    <a href="#" class="hero-cta" id="heroCta"><span id="heroCtaLabel"></span> →</a>
-  </div>
+    <div class="hero-bg" id="bgA" aria-hidden="true"></div>
+    <div class="hero-bg" id="bgB" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
 
-  <div class="slider-wrap">
-    <div class="slider" id="slider" role="listbox" aria-label="Destinations" tabindex="0"></div>
+    <div class="hero-text" id="heroText">
+      <p class="hero-location" id="heroLocation"></p>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <p class="hero-desc" id="heroDesc"></p>
+      <a href="#" class="hero-cta" id="heroCta"><span id="heroCtaLabel"></span> →</a>
+    </div>
+
+    <div class="stack-wrap">
+      <div class="stack" id="stack" role="listbox" aria-label="Destinations"></div>
+    </div>
   </div>
 </section>
 
@@ -255,9 +262,15 @@
   ];
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const AUTOPLAY_MS = 6000;
+  const AUTOPLAY_MS = 5500;
+  const CARD_RATIO = 1.85;                    // front card height = width * CARD_RATIO
+  const OFFSET_RATIOS = [0, 0.33, 0.56];       // each card's left offset, as a ratio of card width
+  const HEIGHT_RATIOS = [1, 0.84, 0.68];       // each card's height, relative to the front card
+  const OPACITIES     = [1, 0.55, 0.32];
+  const BRIGHTNESS    = [1.05, 0.72, 0.55];
+  const ZS            = [3, 2, 1];
 
-  const sliderEl = document.getElementById('slider');
+  const stackEl = document.getElementById('stack');
   const heroText = document.getElementById('heroText');
   const bgs = [document.getElementById('bgA'), document.getElementById('bgB')];
   const locationEl = document.getElementById('heroLocation');
@@ -266,48 +279,110 @@
   const ctaLabelEl = document.getElementById('heroCtaLabel');
 
   let activeBg = 0;
-  let currentIndex = -1;
-  let cards = [];
+  let currentIndex = 0;
+  let stackCards = [];   // live DOM nodes, front-to-back
   let autoplayTimer = null;
-  let suppressClick = false;
 
-  function buildCards(){
-    slides.forEach((s, i) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.setAttribute('role', 'option');
-      card.setAttribute('aria-selected', 'false');
-      card.dataset.index = i;
-
-      const img = document.createElement('img');
-      img.src = s.img;
-      img.alt = s.location + ' — ' + s.title;
-      img.loading = i < 3 ? 'eager' : 'lazy';
-      card.appendChild(img);
-
-      card.addEventListener('click', () => {
-        if (suppressClick) return;
-        goTo(i, true);
-      });
-
-      sliderEl.appendChild(card);
-      cards.push(card);
-    });
-
-    // trailing space so the final card can still reach the slider's left edge
-    const spacer = document.createElement('div');
-    spacer.style.flex = '0 0 1px';
-    spacer.setAttribute('aria-hidden', 'true');
-    sliderEl.appendChild(spacer);
-    sizeTrailingSpace();
+  function slideAt(i){
+    const len = slides.length;
+    return slides[((i % len) + len) % len];
   }
 
-  function sizeTrailingSpace(){
-    const spacer = sliderEl.lastElementChild;
-    if (!spacer) return;
-    const wrapWidth = sliderEl.parentElement.clientWidth;
-    const cardWidth = cards[0] ? cards[0].getBoundingClientRect().width : 160;
-    spacer.style.flexBasis = Math.max(wrapWidth - cardWidth - 40, 0) + 'px';
+  function getSlotDefs(){
+    const W = 240;
+    const H1 = Math.round(W * CARD_RATIO);
+    return OFFSET_RATIOS.map((ratio, i) => ({
+      left: Math.round(ratio * W),
+      width: W,
+      height: Math.round(H1 * HEIGHT_RATIOS[i]),
+      opacity: OPACITIES[i],
+      brightness: BRIGHTNESS[i],
+      z: ZS[i]
+    }));
+  }
+
+  const SLOT_DEF = getSlotDefs();
+
+  function sizeStack(){
+    const last = SLOT_DEF[SLOT_DEF.length - 1];
+    stackEl.style.width = (last.left + last.width) + 'px';
+    stackEl.style.height = SLOT_DEF[0].height + 'px';
+  }
+
+  function applySlot(card, slot){
+    const def = SLOT_DEF[slot];
+    card.style.width = def.width + 'px';
+    card.style.height = def.height + 'px';
+    card.style.left = def.left + 'px';
+    card.style.top = Math.round((SLOT_DEF[0].height - def.height) / 2) + 'px';
+    card.style.opacity = def.opacity;
+    card.style.filter = 'brightness(' + def.brightness + ') saturate(' + (0.6 + def.opacity * 0.4) + ')';
+    card.style.zIndex = def.z;
+    card.dataset.slot = slot;
+  }
+
+  function makeCard(idx, slot, entering){
+    const card = document.createElement('div');
+    card.className = 'stack-card' + (entering ? ' entering' : '');
+    card.setAttribute('role', 'option');
+    card.dataset.idx = idx;
+    const img = document.createElement('img');
+    img.src = slideAt(idx).img;
+    img.alt = slideAt(idx).location;
+    img.loading = slot === 0 ? 'eager' : 'lazy';
+    card.appendChild(img);
+    card.addEventListener('click', () => {
+      const clickedSlot = parseInt(card.dataset.slot, 10);
+      if (clickedSlot === 0) return;
+      rotate(clickedSlot);
+      resetAutoplay();
+    });
+    applySlot(card, slot);
+    stackEl.appendChild(card);
+    return card;
+  }
+
+  function buildStack(){
+    sizeStack();
+    for (let s = 0; s < SLOT_DEF.length; s++){
+      stackCards.push(makeCard(s, s, false));
+    }
+  }
+
+  function rotate(steps){
+    const newCurrent = currentIndex + steps;
+    const survivors = [];
+    const filledSlots = new Set();
+
+    stackCards.forEach((card) => {
+      const idx = parseInt(card.dataset.idx, 10);
+      const newSlot = idx - newCurrent;
+      if (newSlot >= 0 && newSlot < SLOT_DEF.length){
+        applySlot(card, newSlot);
+        filledSlots.add(newSlot);
+        survivors.push(card);
+      } else {
+        card.classList.add('exiting');
+        setTimeout(() => card.remove(), 650);
+      }
+    });
+
+    for (let s = 0; s < SLOT_DEF.length; s++){
+      if (!filledSlots.has(s)){
+        const idx = newCurrent + s;
+        const entering = makeCard(idx, Math.min(s + 1, SLOT_DEF.length - 1), true);
+        survivors.push(entering);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          entering.classList.remove('entering');
+          applySlot(entering, s);
+        }));
+      }
+    }
+
+    stackCards = survivors;
+    currentIndex = newCurrent;
+    crossfadeBg(slideAt(currentIndex).img);
+    switchText(slideAt(currentIndex));
   }
 
   function crossfadeBg(imgUrl){
@@ -337,106 +412,43 @@
     }, 260);
   }
 
-  function goTo(index, smooth){
-    const card = cards[index];
-    if (!card) return;
-    sliderEl.scrollTo({ left: card.offsetLeft - parseFloat(getComputedStyle(sliderEl).paddingLeft || 0), behavior: smooth ? 'smooth' : 'auto' });
-  }
-
-  function setActive(index){
-    if (index === currentIndex) return;
-    currentIndex = index;
-    cards.forEach((c, i) => {
-      c.classList.toggle('is-active', i === index);
-      c.setAttribute('aria-selected', i === index ? 'true' : 'false');
-    });
-    crossfadeBg(slides[index].img);
-    switchText(slides[index]);
-  }
-
-  function nearestIndex(){
-    const wrapLeft = sliderEl.getBoundingClientRect().left + parseFloat(getComputedStyle(sliderEl).paddingLeft || 0);
-    let best = 0, bestDist = Infinity;
-    cards.forEach((c, i) => {
-      const dist = Math.abs(c.getBoundingClientRect().left - wrapLeft);
-      if (dist < bestDist){ bestDist = dist; best = i; }
-    });
-    return best;
-  }
-
-  let scrollTicking = false;
-  sliderEl.addEventListener('scroll', () => {
-    if (scrollTicking) return;
-    scrollTicking = true;
-    requestAnimationFrame(() => {
-      setActive(nearestIndex());
-      scrollTicking = false;
-    });
-  });
-
-  // wheel -> horizontal
-  sliderEl.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)){
-      e.preventDefault();
-      sliderEl.scrollLeft += e.deltaY;
-    }
-    resetAutoplay();
-  }, { passive: false });
-
-  // keyboard
-  sliderEl.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight'){ e.preventDefault(); goTo(Math.min(currentIndex + 1, cards.length - 1), true); resetAutoplay(); }
-    if (e.key === 'ArrowLeft'){ e.preventDefault(); goTo(Math.max(currentIndex - 1, 0), true); resetAutoplay(); }
-  });
-
-  // mouse drag
-  let dragging = false, dragStartX = 0, dragStartScroll = 0, dragDistance = 0;
-  sliderEl.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse') { resetAutoplay(); return; }
-    dragging = true;
-    dragDistance = 0;
-    dragStartX = e.clientX;
-    dragStartScroll = sliderEl.scrollLeft;
-    sliderEl.style.scrollSnapType = 'none';
-    resetAutoplay();
-  });
-  window.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    const delta = e.clientX - dragStartX;
-    dragDistance = Math.abs(delta);
-    sliderEl.scrollLeft = dragStartScroll - delta;
-  });
-  window.addEventListener('pointerup', () => {
-    if (!dragging) return;
-    dragging = false;
-    sliderEl.style.scrollSnapType = 'x mandatory';
-    suppressClick = dragDistance > 6;
-    goTo(nearestIndex(), true);
-    setTimeout(() => { suppressClick = false; }, 50);
-  });
-
-  sliderEl.addEventListener('touchstart', resetAutoplay, { passive: true });
-
   function resetAutoplay(){
     clearTimeout(autoplayTimer);
     scheduleAutoplay();
   }
   function scheduleAutoplay(){
     autoplayTimer = setTimeout(() => {
-      const next = (currentIndex + 1) % cards.length;
-      goTo(next, true);
+      rotate(1);
       scheduleAutoplay();
     }, AUTOPLAY_MS);
   }
 
-  window.addEventListener('resize', sizeTrailingSpace);
+  const heroEl = document.querySelector('.hero');
+  const canvasEl = document.getElementById('heroCanvas');
+  const DESIGN_W = 1280;
+  const DESIGN_H = 720;
 
-  buildCards();
+  function fitCanvas(){
+    const vw = heroEl.clientWidth;
+    const vh = heroEl.clientHeight;
+    const scale = Math.max(vw / DESIGN_W, vh / DESIGN_H);
+    const scaledW = DESIGN_W * scale;
+    const scaledH = DESIGN_H * scale;
+    canvasEl.style.transform = 'scale(' + scale + ')';
+    canvasEl.style.left = Math.round((vw - scaledW) / 2) + 'px';
+    canvasEl.style.top = Math.round((vh - scaledH) / 2) + 'px';
+  }
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitCanvas, 80);
+  });
+  fitCanvas();
+
+  buildStack();
   crossfadeBg(slides[0].img);
   setText(slides[0]);
-  cards[0].classList.add('is-active');
-  cards[0].setAttribute('aria-selected', 'true');
-  currentIndex = 0;
   if (!reduceMotion) scheduleAutoplay();
 })();
 </script>
