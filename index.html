@@ -3,1381 +3,442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Northbound Expeditions</title>
-
+<title>Northbound Expeditions — Hero</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-
-:root{
-  --ink:#14201E;
-  --cream:#F1EAD9;
-  --muted:rgba(241,234,217,.68);
-  --gold:#C9973E;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html,
-body{
-  margin:0;
-  width:100%;
-  height:100%;
-}
-
-body{
-  overflow:hidden;
-  background:var(--ink);
-  font-family:"Work Sans",sans-serif;
-}
-
-
-/* =================================
-   HERO
-================================= */
-
-.hero{
-  position:relative;
-
-  width:100%;
-  height:100vh;
-  height:100dvh;
-
-  min-height:560px;
-
-  overflow:hidden;
-
-  background:var(--ink);
-
-  color:var(--cream);
-}
-
-
-/* =================================
-   BACKGROUND
-================================= */
-
-.background{
-  position:absolute;
-  inset:-5%;
-
-  background-size:cover;
-  background-position:center bottom;
-  background-repeat:no-repeat;
-
-  opacity:0;
-
-  transform:
-    scale(1.1)
-    translateY(-3%);
-
-  transition:
-    opacity 1s ease,
-    transform 5s cubic-bezier(.22,.61,.36,1);
-
-  z-index:1;
-}
-
-.background.active{
-  opacity:1;
-
-  transform:
-    scale(1)
-    translateY(2%);
-}
-
-
-/* =================================
-   DARK OVERLAY
-================================= */
-
-.overlay{
-  position:absolute;
-  inset:0;
-
-  z-index:2;
-
-  background:
-    linear-gradient(
-      100deg,
-      rgba(20,32,30,.96) 0%,
-      rgba(20,32,30,.78) 30%,
-      rgba(20,32,30,.35) 62%,
-      rgba(20,32,30,.05) 90%
-    );
-}
-
-
-/* =================================
-   CONTENT
-================================= */
-
-.content{
-  position:absolute;
-
-  left:6%;
-  top:50%;
-
-  width:min(500px,43vw);
-
-  transform:translateY(-50%);
-
-  z-index:5;
-}
-
-.kicker{
-  display:flex;
-  align-items:center;
-  gap:12px;
-
-  margin-bottom:20px;
-
-  color:var(--gold);
-
-  font-size:10px;
-
-  letter-spacing:.2em;
-
-  text-transform:uppercase;
-}
-
-.kicker::before{
-  content:"";
-
-  width:32px;
-  height:1px;
-
-  background:var(--gold);
-}
-
-.title{
-  margin:0 0 18px;
-
-  font-family:"Fraunces",serif;
-
-  font-style:italic;
-
-  font-weight:500;
-
-  font-size:
-    clamp(
-      2rem,
-      4.5vw,
-      4.4rem
-    );
-
-  line-height:1.04;
-
-  letter-spacing:-.03em;
-
-  transition:
-    opacity .35s ease,
-    transform .4s ease;
-}
-
-.description{
-  margin:0 0 24px;
-
-  max-width:500px;
-
-  color:var(--muted);
-
-  font-size:
-    clamp(
-      .8rem,
-      1.3vw,
-      1rem
-    );
-
-  line-height:1.7;
-
-  transition:
-    opacity .35s ease,
-    transform .4s ease;
-}
-
-.place{
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-
-  color:rgba(241,234,217,.5);
-
-  font-size:10px;
-
-  letter-spacing:.15em;
-
-  text-transform:uppercase;
-}
-
-.place-dot{
-  width:5px;
-  height:5px;
-
-  border-radius:50%;
-
-  background:var(--gold);
-}
-
-
-/* =================================
-   TEXT ANIMATION
-================================= */
-
-.content.hide .title,
-.content.hide .description,
-.content.hide .place{
-  opacity:0;
-
-  transform:translateY(12px);
-}
-
-
-/* =================================
-   HORIZONTAL SLIDER WRAPPER
-================================= */
-
-.slider-wrap{
-  position:absolute;
-
-  left:6%;
-  right:0;
-
-  bottom:7%;
-
-  z-index:6;
-
-  overflow:hidden;
-
-  /* NO BACKGROUND */
-
-  background:transparent;
-}
-
-
-/* =================================
-   SLIDER
-================================= */
-
-.slider{
-  display:flex;
-
-  align-items:flex-end;
-
-  gap:16px;
-
-  width:100%;
-
-  overflow-x:auto;
-  overflow-y:hidden;
-
-  padding:20px 0 20px;
-
-  scrollbar-width:none;
-
-  scroll-behavior:smooth;
-
-  cursor:grab;
-
-  /* NO BACKGROUND */
-  background:transparent;
-
-  user-select:none;
-}
-
-.slider::-webkit-scrollbar{
-  display:none;
-}
-
-.slider.dragging{
-  cursor:grabbing;
-
-  scroll-behavior:auto;
-}
-
-
-/* =================================
-   CARD
-================================= */
-
-.card{
-  position:relative;
-
-  flex:0 0 150px;
-
-  width:150px;
-  height:190px;
-
-  overflow:hidden;
-
-  border-radius:24px;
-
-  border:1px solid rgba(241,234,217,.15);
-
-  opacity:.45;
-
-  transform:scale(.86);
-
-  transition:
-    opacity .45s ease,
-    transform .5s cubic-bezier(.22,.61,.36,1),
-    border-color .45s ease,
-    box-shadow .45s ease;
-
-  cursor:pointer;
-}
-
-.card.active{
-  opacity:1;
-
-  transform:scale(1);
-
-  border-color:
-    rgba(201,151,62,.9);
-
-  box-shadow:
-    0 22px 55px rgba(0,0,0,.5);
-}
-
-.card:hover{
-  opacity:.85;
-
-  transform:scale(.93);
-}
-
-.card.active:hover{
-  transform:scale(1.02);
-}
-
-
-/* =================================
-   CARD IMAGE
-================================= */
-
-.card img{
-  display:block;
-
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
-
-  pointer-events:none;
-
-  transition:
-    transform .8s ease;
-}
-
-.card:hover img{
-  transform:scale(1.06);
-}
-
-
-/* =================================
-   CARD GRADIENT
-================================= */
-
-.card::after{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(20,32,30,.72),
-      transparent 60%
-    );
-}
-
-
-/* =================================
-   NUMBER
-================================= */
-
-.number{
-  position:absolute;
-
-  left:15px;
-  bottom:13px;
-
-  z-index:2;
-
-  font-size:9px;
-
-  letter-spacing:.2em;
-
-  color:rgba(241,234,217,.65);
-}
-
-.card.active .number{
-  color:var(--gold);
-}
-
-
-/* =================================
-   PROGRESS
-================================= */
-
-.progress{
-  position:absolute;
-
-  left:6%;
-  bottom:4%;
-
-  z-index:7;
-
-  width:120px;
-  height:2px;
-
-  overflow:hidden;
-
-  background:
-    rgba(241,234,217,.2);
-}
-
-.progress span{
-  display:block;
-
-  width:0;
-  height:100%;
-
-  background:var(--gold);
-}
-
-
-/* =================================
-   MOBILE
-================================= */
-
-@media(max-width:700px){
-
-  .overlay{
+  :root{
+    --ink: #14201E;
+    --parchment: #F1EAD9;
+    --stone: rgba(241,234,217,0.7);
+    --gold: #C9973E;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; background:var(--ink); overflow-x:hidden; }
+  body{ font-family:'Work Sans', sans-serif; }
+
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:560px;
+    max-height:960px;
+    overflow:hidden;
+    background:var(--ink);
+    color:var(--parchment);
+  }
+
+  /* ---------- background ---------- */
+  .hero-bg{
+    position:absolute; inset:0;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 1.3s ease;
+    will-change:transform, opacity;
+  }
+  .hero-bg.is-active{
+    opacity:1;
+    animation:kenMove 6s linear forwards;
+  }
+  @keyframes kenMove{
+    from{ transform:scale(1.05) translateY(-2%); }
+    to{ transform:scale(1) translateY(2%); }
+  }
+
+  .hero-overlay{
+    position:absolute; inset:0; z-index:1;
     background:
-      linear-gradient(
-        100deg,
-        rgba(20,32,30,.96),
-        rgba(20,32,30,.65)
-      );
+      linear-gradient(100deg, rgba(20,32,30,0.82) 0%, rgba(20,32,30,0.55) 38%, rgba(20,32,30,0.22) 62%, rgba(20,32,30,0.28) 100%);
+    pointer-events:none;
   }
 
-  .content{
+  /* ---------- text ---------- */
+  .hero-text{
+    position:absolute;
     left:6%;
-    top:39%;
+    top:50%;
+    transform:translateY(-50%);
+    width:min(40%, 520px);
+    z-index:2;
+  }
+  .hero-location{
+    font-family:'Work Sans', sans-serif;
+    font-size:0.78rem;
+    font-weight:600;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 16px;
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .hero-title{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.9rem, 4vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 18px;
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .hero-desc{
+    font-size:clamp(0.9rem, 1.5vw, 1.05rem);
+    line-height:1.65;
+    color:var(--stone);
+    margin:0 0 26px;
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .hero-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.9rem;
+    font-weight:500;
+    color:var(--parchment);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+    padding-bottom:5px;
+    transition:opacity .5s ease, transform .5s ease, letter-spacing .3s ease;
+  }
+  .hero-cta:hover{ letter-spacing:0.03em; }
 
-    width:43vw;
+  .hero-text.is-switching .hero-location,
+  .hero-text.is-switching .hero-title,
+  .hero-text.is-switching .hero-desc,
+  .hero-text.is-switching .hero-cta{
+    opacity:0;
+    transform:translateY(10px);
   }
 
-  .title{
-    font-size:1.6rem;
-  }
-
-  .description{
-    font-size:.7rem;
-
-    line-height:1.55;
-  }
-
-  .kicker{
-    font-size:8px;
-
-    margin-bottom:14px;
-  }
-
+  /* ---------- slider ---------- */
   .slider-wrap{
-    left:5%;
+    position:absolute;
+    left:40%;
     right:0;
-
-    bottom:5%;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:2;
+    overflow:hidden;
   }
-
   .slider{
-    gap:12px;
-
-    padding-right:20px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    overflow-x:auto;
+    overflow-y:visible;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-x;
+    padding:14px 6%;
+    margin:0;
+    list-style:none;
+    scrollbar-width:none;
+    cursor:grab;
   }
+  .slider::-webkit-scrollbar{ display:none; }
+  .slider:active{ cursor:grabbing; }
+  .slider:focus-visible{ outline:2px solid var(--gold); outline-offset:6px; }
 
   .card{
-    flex-basis:105px;
-
-    width:105px;
-    height:150px;
-
-    border-radius:19px;
+    position:relative;
+    flex-shrink:0;
+    width:clamp(110px, 12vw, 170px);
+    aspect-ratio:3 / 4;
+    border-radius:16px;
+    overflow:hidden;
+    scroll-snap-align:start;
+    opacity:0.5;
+    filter:saturate(0.85) brightness(0.8);
+    box-shadow:0 14px 30px rgba(0,0,0,0.3);
+    transition:opacity .5s ease, filter .5s ease, box-shadow .5s ease, transform .35s ease;
+    cursor:pointer;
+  }
+  .card img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    pointer-events:none;
+  }
+  .card:hover{ transform:translateY(-5px); }
+  .card.is-active{
+    opacity:1;
+    filter:saturate(1) brightness(1.05);
+    box-shadow:0 0 0 2px rgba(201,151,62,0.85), 0 20px 42px rgba(0,0,0,0.4);
+    transform:scale(1.02);
   }
 
-  .progress{
-    display:none;
-  }
-}
-
-
-/* =================================
-   REDUCED MOTION
-================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    transition:none!important;
-    scroll-behavior:auto!important;
+  @media (max-width:900px){
+    .hero-text{ width:min(52%, 460px); }
+    .slider-wrap{ left:0; }
+    .slider{ padding:14px 5%; }
   }
 
-}
+  @media (max-width:600px){
+    .hero-text{ left:5%; width:88%; top:20%; transform:none; }
+    .slider-wrap{ left:5%; right:5%; top:auto; bottom:8%; transform:none; }
+    .card{ width:clamp(90px, 26vw, 120px); }
+  }
 
+  @media (prefers-reduced-motion:reduce){
+    .hero-bg{ animation:none !important; transform:none !important; }
+    .card, .hero-location, .hero-title, .hero-desc, .hero-cta{ transition:none !important; }
+    .slider{ scroll-behavior:auto; }
+  }
 </style>
 </head>
-
-
 <body>
 
-<section class="hero">
+<section class="hero" aria-label="Destination showcase">
+  <div class="hero-bg" id="bgA" aria-hidden="true"></div>
+  <div class="hero-bg" id="bgB" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
 
-
-  <!-- BACKGROUNDS -->
-
-  <div
-    class="background active"
-    id="backgroundA">
+  <div class="hero-text" id="heroText">
+    <p class="hero-location" id="heroLocation"></p>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-desc" id="heroDesc"></p>
+    <a href="#" class="hero-cta" id="heroCta"><span id="heroCtaLabel"></span> →</a>
   </div>
-
-  <div
-    class="background"
-    id="backgroundB">
-  </div>
-
-
-  <!-- OVERLAY -->
-
-  <div class="overlay"></div>
-
-
-  <!-- CONTENT -->
-
-  <div
-    class="content"
-    id="content">
-
-    <div class="kicker">
-      Northbound Expeditions
-    </div>
-
-    <h1
-      class="title"
-      id="title">
-      Where the ice remembers
-    </h1>
-
-    <p
-      class="description"
-      id="description">
-      Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.
-    </p>
-
-    <div class="place">
-
-      <span class="place-dot"></span>
-
-      <span id="place">
-        Svalbard, Norway
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <!-- HORIZONTAL IMAGE SLIDER -->
 
   <div class="slider-wrap">
-
-    <div
-      class="slider"
-      id="slider">
-    </div>
-
+    <div class="slider" id="slider" role="listbox" aria-label="Destinations" tabindex="0"></div>
   </div>
-
-
-  <!-- PROGRESS -->
-
-  <div class="progress">
-
-    <span id="progress"></span>
-
-  </div>
-
-
 </section>
 
-
 <script>
-
-/* =========================================
-   DATA
-========================================= */
-
-const slides = [
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "Where the ice remembers",
-
-    description:
-    "Svalbard, Norway — polar bear country at eighty degrees north, where the summer sun never sets.",
-
-    place:
-    "Svalbard, Norway"
-  },
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "Cliffs that outlast the wind",
-
-    description:
-    "The Faroe Islands — turf-roofed villages tucked beneath sea cliffs older than memory.",
-
-    place:
-    "Faroe Islands"
-  },
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "Granite against the sky",
-
-    description:
-    "Torres del Paine, Patagonia — glacial towers standing over turquoise water.",
-
-    place:
-    "Patagonia, Chile"
-  },
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "A quiet the size of a valley",
-
-    description:
-    "Fiordland, New Zealand — rainforest and mist folded into ancient fjords.",
-
-    place:
-    "Fiordland, New Zealand"
-  },
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "Fire under permanent frost",
-
-    description:
-    "Kamchatka, Russia — volcanoes and hot springs at the edge of the Pacific.",
-
-    place:
-    "Kamchatka, Russia"
-  },
-
-  {
-    image:
-    "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=85",
-
-    title:
-    "A desert carved from cold",
-
-    description:
-    "Ladakh, India — high mountain passes and monasteries above the clouds.",
-
-    place:
-    "Ladakh, India"
-  }
-
-];
-
-
-/* =========================================
-   ELEMENTS
-========================================= */
-
-const slider =
-  document.getElementById("slider");
-
-const title =
-  document.getElementById("title");
-
-const description =
-  document.getElementById("description");
-
-const place =
-  document.getElementById("place");
-
-const content =
-  document.getElementById("content");
-
-const progress =
-  document.getElementById("progress");
-
-const backgrounds = [
-
-  document.getElementById("backgroundA"),
-
-  document.getElementById("backgroundB")
-
-];
-
-
-/* =========================================
-   STATE
-========================================= */
-
-let current = 0;
-
-let activeBackground = 0;
-
-let autoplay = null;
-
-let progressFrame = null;
-
-const AUTO_TIME = 5000;
-
-
-/* =========================================
-   BUILD CARDS
-========================================= */
-
-function buildCards(){
-
-  slides.forEach((slide,index)=>{
-
-    const card =
-      document.createElement("div");
-
-    card.className = "card";
-
-    card.dataset.index = index;
-
-    if(index === 0){
-
-      card.classList.add("active");
-
+(function(){
+  const slides = [
+    {
+      img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80',
+      location: 'Svalbard, Norway',
+      title: 'Where the ice remembers',
+      desc: 'Polar landscapes, endless summer light, and wilderness at the edge of the Arctic.',
+      cta: 'Explore the route'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80',
+      location: 'Faroe Islands',
+      title: 'Cliffs that outlast the wind',
+      desc: 'Turf-roofed villages tucked beneath sea cliffs older than memory.',
+      cta: 'Plan the crossing'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
+      location: 'Patagonia, Chile',
+      title: 'Granite against the sky',
+      desc: 'Glacial towers standing watch over impossibly blue water.',
+      cta: 'Trace the trail'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80',
+      location: 'Fiordland, New Zealand',
+      title: 'A quiet the size of a valley',
+      desc: 'Rainforest and mist folded into ancient, water-carved fjords.',
+      cta: 'Chart the fjord'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80',
+      location: 'Kamchatka, Russia',
+      title: 'Fire under permanent frost',
+      desc: 'Volcanoes and hot springs at the edge of the Pacific Ring of Fire.',
+      cta: 'Follow the ridge'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=80',
+      location: 'Ladakh, India',
+      title: 'A desert carved from cold',
+      desc: 'High mountain passes and monasteries suspended above the clouds.',
+      cta: 'Climb the pass'
     }
-
-
-    card.innerHTML = `
-
-      <img
-        src="${slide.image}"
-        alt="${slide.title}"
-        draggable="false"
-      >
-
-      <span class="number">
-        ${String(index+1).padStart(2,"0")}
-      </span>
-
-    `;
-
-
-    card.addEventListener(
-      "click",
-      function(){
-
-        activate(index);
-
-      }
-    );
-
-
-    slider.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================================
-   MOVE CARD TO LEFT
-========================================= */
-
-function moveCardToLeft(index){
-
-  const card =
-    slider.querySelector(
-      `.card[data-index="${index}"]`
-    );
-
-  if(!card){
-    return;
-  }
-
-
-  /*
-    This is the important part.
-
-    Selected card becomes the
-    LEFTMOST card.
-  */
-
-  slider.scrollTo({
-
-    left:
-      card.offsetLeft -
-      slider.offsetLeft,
-
-    behavior:"smooth"
-
-  });
-
-}
-
-
-/* =========================================
-   UPDATE ACTIVE CARD
-========================================= */
-
-function updateCards(index){
-
-  const cards =
-    slider.querySelectorAll(".card");
-
-
-  cards.forEach(card=>{
-
-    card.classList.toggle(
-      "active",
-      Number(card.dataset.index) === index
-    );
-
-  });
-
-}
-
-
-/* =========================================
-   BACKGROUND
-========================================= */
-
-function updateBackground(index){
-
-  const next =
-    backgrounds[
-      1-activeBackground
-    ];
-
-  const old =
-    backgrounds[
-      activeBackground
-    ];
-
-
-  next.style.backgroundImage =
-    `url("${slides[index].image}")`;
-
-
-  next.classList.remove("active");
-
-  next.style.opacity = "0";
-
-  next.style.transform =
-    "scale(1.1) translateY(-3%)";
-
-
-  next.offsetHeight;
-
-
-  requestAnimationFrame(()=>{
-
-    next.classList.add("active");
-
-    next.style.opacity = "1";
-
-    next.style.transform =
-      "scale(1) translateY(2%)";
-
-  });
-
-
-  old.classList.remove("active");
-
-  old.style.opacity = "0";
-
-
-  activeBackground =
-    1-activeBackground;
-
-}
-
-
-/* =========================================
-   TEXT
-========================================= */
-
-function updateText(index){
-
-  content.classList.add("hide");
-
-
-  setTimeout(()=>{
-
-    title.textContent =
-      slides[index].title;
-
-    description.textContent =
-      slides[index].description;
-
-    place.textContent =
-      slides[index].place;
-
-
-    content.classList.remove("hide");
-
-  },280);
-
-}
-
-
-/* =========================================
-   ACTIVATE SLIDE
-========================================= */
-
-function activate(index){
-
-  if(index === current){
-
-    moveCardToLeft(index);
-
-    return;
-
-  }
-
-
-  current = index;
-
-
-  updateCards(index);
-
-  moveCardToLeft(index);
-
-  updateBackground(index);
-
-  updateText(index);
-
-  resetAutoplay();
-
-}
-
-
-/* =========================================
-   NEXT
-========================================= */
-
-function next(){
-
-  let nextIndex =
-    current + 1;
-
-
-  if(nextIndex >= slides.length){
-
-    nextIndex = 0;
-
-  }
-
-
-  activate(nextIndex);
-
-}
-
-
-/* =========================================
-   PREVIOUS
-========================================= */
-
-function previous(){
-
-  let previousIndex =
-    current - 1;
-
-
-  if(previousIndex < 0){
-
-    previousIndex =
-      slides.length - 1;
-
-  }
-
-
-  activate(previousIndex);
-
-}
-
-
-/* =========================================
-   AUTOPLAY
-========================================= */
-
-function startAutoplay(){
-
-  clearInterval(autoplay);
-
-  autoplay =
-    setInterval(
-      next,
-      AUTO_TIME
-    );
-
-
-  startProgress();
-
-}
-
-
-/* =========================================
-   RESET
-========================================= */
-
-function resetAutoplay(){
-
-  clearInterval(autoplay);
-
-  cancelAnimationFrame(
-    progressFrame
-  );
-
-  progress.style.width =
-    "0%";
-
-  startAutoplay();
-
-}
-
-
-/* =========================================
-   PROGRESS
-========================================= */
-
-function startProgress(){
-
-  const start =
-    performance.now();
-
-
-  function animate(now){
-
-    const elapsed =
-      now-start;
-
-
-    const percent =
-      Math.min(
-        elapsed/AUTO_TIME*100,
-        100
-      );
-
-
-    progress.style.width =
-      percent+"%";
-
-
-    if(percent < 100){
-
-      progressFrame =
-        requestAnimationFrame(
-          animate
-        );
-
-    }
-
-  }
-
-
-  progressFrame =
-    requestAnimationFrame(
-      animate
-    );
-
-}
-
-
-/* =========================================
-   MOUSE WHEEL
-========================================= */
-
-slider.addEventListener(
-  "wheel",
-  function(event){
-
-    event.preventDefault();
-
-
-    if(event.deltaY > 0){
-
-      next();
-
-    }
-    else{
-
-      previous();
-
-    }
-
-  },
-  {
-    passive:false
-  }
-);
-
-
-/* =========================================
-   DRAG
-========================================= */
-
-let isDragging = false;
-
-let dragStartX = 0;
-
-let dragScroll = 0;
-
-
-slider.addEventListener(
-  "pointerdown",
-  function(event){
-
-    isDragging = true;
-
-    dragStartX =
-      event.clientX;
-
-    dragScroll =
-      slider.scrollLeft;
-
-    slider.classList.add(
-      "dragging"
-    );
-
-    slider.setPointerCapture(
-      event.pointerId
-    );
-
-  }
-);
-
-
-slider.addEventListener(
-  "pointermove",
-  function(event){
-
-    if(!isDragging){
-      return;
-    }
-
-
-    const distance =
-      event.clientX -
-      dragStartX;
-
-
-    slider.scrollLeft =
-      dragScroll-distance;
-
-  }
-);
-
-
-slider.addEventListener(
-  "pointerup",
-  function(){
-
-    if(!isDragging){
-      return;
-    }
-
-
-    isDragging = false;
-
-    slider.classList.remove(
-      "dragging"
-    );
-
-
-    /*
-      After dragging,
-      find the card closest
-      to the LEFT edge.
-    */
-
-    const cards =
-      [...slider.querySelectorAll(
-        ".card"
-      )];
-
-
-    let nearest = 0;
-
-    let distance =
-      Infinity;
-
-
-    cards.forEach((card,index)=>{
-
-      const d =
-        Math.abs(
-          card.offsetLeft -
-          slider.scrollLeft
-        );
-
-
-      if(d < distance){
-
-        distance = d;
-
-        nearest = index;
-
-      }
-
+  ];
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const AUTOPLAY_MS = 6000;
+
+  const sliderEl = document.getElementById('slider');
+  const heroText = document.getElementById('heroText');
+  const bgs = [document.getElementById('bgA'), document.getElementById('bgB')];
+  const locationEl = document.getElementById('heroLocation');
+  const titleEl = document.getElementById('heroTitle');
+  const descEl = document.getElementById('heroDesc');
+  const ctaLabelEl = document.getElementById('heroCtaLabel');
+
+  let activeBg = 0;
+  let currentIndex = -1;
+  let cards = [];
+  let autoplayTimer = null;
+  let suppressClick = false;
+
+  function buildCards(){
+    slides.forEach((s, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.setAttribute('role', 'option');
+      card.setAttribute('aria-selected', 'false');
+      card.dataset.index = i;
+
+      const img = document.createElement('img');
+      img.src = s.img;
+      img.alt = s.location + ' — ' + s.title;
+      img.loading = i < 3 ? 'eager' : 'lazy';
+      card.appendChild(img);
+
+      card.addEventListener('click', () => {
+        if (suppressClick) return;
+        goTo(i, true);
+      });
+
+      sliderEl.appendChild(card);
+      cards.push(card);
     });
 
-
-    activate(nearest);
-
+    // trailing space so the final card can still reach the slider's left edge
+    const spacer = document.createElement('div');
+    spacer.style.flex = '0 0 1px';
+    spacer.setAttribute('aria-hidden', 'true');
+    sliderEl.appendChild(spacer);
+    sizeTrailingSpace();
   }
-);
 
-
-/* =========================================
-   TOUCH
-========================================= */
-
-let touchStartX = 0;
-
-
-slider.addEventListener(
-  "touchstart",
-  function(event){
-
-    touchStartX =
-      event.touches[0].clientX;
-
-  },
-  {
-    passive:true
+  function sizeTrailingSpace(){
+    const spacer = sliderEl.lastElementChild;
+    if (!spacer) return;
+    const wrapWidth = sliderEl.parentElement.clientWidth;
+    const cardWidth = cards[0] ? cards[0].getBoundingClientRect().width : 160;
+    spacer.style.flexBasis = Math.max(wrapWidth - cardWidth - 40, 0) + 'px';
   }
-);
 
-
-slider.addEventListener(
-  "touchend",
-  function(event){
-
-    const touchEndX =
-      event.changedTouches[0].clientX;
-
-
-    const distance =
-      touchStartX-touchEndX;
-
-
-    if(Math.abs(distance)<40){
-
-      return;
-
-    }
-
-
-    if(distance>0){
-
-      next();
-
-    }
-    else{
-
-      previous();
-
-    }
-
-  },
-  {
-    passive:true
+  function crossfadeBg(imgUrl){
+    const incoming = bgs[1 - activeBg];
+    const outgoing = bgs[activeBg];
+    incoming.style.backgroundImage = 'url(' + imgUrl + ')';
+    incoming.classList.remove('is-active');
+    void incoming.offsetWidth; // restart animation
+    incoming.classList.add('is-active');
+    outgoing.classList.remove('is-active');
+    activeBg = 1 - activeBg;
   }
-);
 
-
-/* =========================================
-   KEYBOARD
-========================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key === "ArrowRight"){
-
-      next();
-
-    }
-
-
-    if(event.key === "ArrowLeft"){
-
-      previous();
-
-    }
-
+  function setText(slide){
+    locationEl.textContent = slide.location.toUpperCase();
+    titleEl.textContent = slide.title;
+    descEl.textContent = slide.desc;
+    ctaLabelEl.textContent = slide.cta;
   }
-);
 
+  function switchText(slide){
+    if (reduceMotion){ setText(slide); return; }
+    heroText.classList.add('is-switching');
+    setTimeout(() => {
+      setText(slide);
+      heroText.classList.remove('is-switching');
+    }, 260);
+  }
 
-/* =========================================
-   INIT
-========================================= */
+  function goTo(index, smooth){
+    const card = cards[index];
+    if (!card) return;
+    sliderEl.scrollTo({ left: card.offsetLeft - parseFloat(getComputedStyle(sliderEl).paddingLeft || 0), behavior: smooth ? 'smooth' : 'auto' });
+  }
 
-function init(){
+  function setActive(index){
+    if (index === currentIndex) return;
+    currentIndex = index;
+    cards.forEach((c, i) => {
+      c.classList.toggle('is-active', i === index);
+      c.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    crossfadeBg(slides[index].img);
+    switchText(slides[index]);
+  }
 
-  backgrounds[0].style.backgroundImage =
-    `url("${slides[0].image}")`;
+  function nearestIndex(){
+    const wrapLeft = sliderEl.getBoundingClientRect().left + parseFloat(getComputedStyle(sliderEl).paddingLeft || 0);
+    let best = 0, bestDist = Infinity;
+    cards.forEach((c, i) => {
+      const dist = Math.abs(c.getBoundingClientRect().left - wrapLeft);
+      if (dist < bestDist){ bestDist = dist; best = i; }
+    });
+    return best;
+  }
 
-  backgrounds[0].style.opacity =
-    "1";
+  let scrollTicking = false;
+  sliderEl.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      setActive(nearestIndex());
+      scrollTicking = false;
+    });
+  });
 
-  backgrounds[0].style.transform =
-    "scale(1) translateY(2%)";
+  // wheel -> horizontal
+  sliderEl.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      sliderEl.scrollLeft += e.deltaY;
+    }
+    resetAutoplay();
+  }, { passive: false });
 
+  // keyboard
+  sliderEl.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight'){ e.preventDefault(); goTo(Math.min(currentIndex + 1, cards.length - 1), true); resetAutoplay(); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); goTo(Math.max(currentIndex - 1, 0), true); resetAutoplay(); }
+  });
+
+  // mouse drag
+  let dragging = false, dragStartX = 0, dragStartScroll = 0, dragDistance = 0;
+  sliderEl.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') { resetAutoplay(); return; }
+    dragging = true;
+    dragDistance = 0;
+    dragStartX = e.clientX;
+    dragStartScroll = sliderEl.scrollLeft;
+    sliderEl.style.scrollSnapType = 'none';
+    resetAutoplay();
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const delta = e.clientX - dragStartX;
+    dragDistance = Math.abs(delta);
+    sliderEl.scrollLeft = dragStartScroll - delta;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    sliderEl.style.scrollSnapType = 'x mandatory';
+    suppressClick = dragDistance > 6;
+    goTo(nearestIndex(), true);
+    setTimeout(() => { suppressClick = false; }, 50);
+  });
+
+  sliderEl.addEventListener('touchstart', resetAutoplay, { passive: true });
+
+  function resetAutoplay(){
+    clearTimeout(autoplayTimer);
+    scheduleAutoplay();
+  }
+  function scheduleAutoplay(){
+    autoplayTimer = setTimeout(() => {
+      const next = (currentIndex + 1) % cards.length;
+      goTo(next, true);
+      scheduleAutoplay();
+    }, AUTOPLAY_MS);
+  }
+
+  window.addEventListener('resize', sizeTrailingSpace);
 
   buildCards();
-
-  updateCards(0);
-
-  startAutoplay();
-
-}
-
-
-init();
-
+  crossfadeBg(slides[0].img);
+  setText(slides[0]);
+  cards[0].classList.add('is-active');
+  cards[0].setAttribute('aria-selected', 'true');
+  currentIndex = 0;
+  if (!reduceMotion) scheduleAutoplay();
+})();
 </script>
 
 </body>
